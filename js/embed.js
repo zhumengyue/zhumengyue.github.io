@@ -1,6 +1,6 @@
 //HelloDog -  http://wsgzao.github.io/post/duoshuo/
 //More info: http://moxfive.xyz/2015/09/29/duosuo-style
-//ç§»åŠ¨å®¢æˆ·ç«¯åˆ¤æ–­å¼€å§‹
+//移动客户端判断开始
 function checkMobile() {
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
     if (isiPad) {
@@ -12,8 +12,8 @@ function checkMobile() {
     }
     return false;
 }
-//ç§»åŠ¨å®¢æˆ·ç«¯åˆ¤æ–­ç»“æŸ
-//ç®¡ç†å‘˜åˆ¤æ–­å¼€å§‹
+//移动客户端判断结束
+//管理员判断开始
 function sskadmin(e) {
     var ssk = '';
     if (e.user_id == 6337444063142216449) {
@@ -29,8 +29,8 @@ function sskadmin(e) {
     }
     return ssk;
 }
-//ç®¡ç†å‘˜åˆ¤æ–­ç»“æŸ
-//æ˜¾UAå¼€å§‹
+//管理员判断结束
+//显UA开始
 function ua(e) {
     var r = new Array;
     var outputer = '';
@@ -42,7 +42,7 @@ function ua(e) {
         outputer = '<span class="ua_maxthon"><i class="fa fa-globe"></i> Maxthon'
     } else if (r = e.match(/BIDUBrowser([\d]*)\/([^\s]+)/ig)) {
         var r1 = r[0].split("/");
-        outputer = '<span class="ua_ucweb"><i class="fa fa-globe"></i> ç™¾åº¦æµè§ˆå™¨'
+        outputer = '<span class="ua_ucweb"><i class="fa fa-globe"></i> 百度浏览器'
     } else if (r = e.match(/UBrowser([\d]*)\/([^\s]+)/ig)) {
         var r1 = r[0].split("/");
         outputer = '<span class="ua_ucweb"><i class="fa fa-globe"></i> UCBrowser'
@@ -50,28 +50,28 @@ function ua(e) {
         var r1 = r[0].split("/");
         outputer = '<span class="ua_ucweb"><i class="fa fa-globe"></i> UCBrowser'
     } else if (r = e.match(/MetaSr/ig)) {
-        outputer = '<span class="ua_sogou"><i class="fa fa-globe"></i> æœç‹—æµè§ˆå™¨'
+        outputer = '<span class="ua_sogou"><i class="fa fa-globe"></i> 搜狗浏览器'
     } else if (r = e.match(/2345Explorer/ig)) {
-        outputer = '<span class="ua_2345explorer"><i class="fa fa-globe"></i> 2345çŽ‹ç‰Œæµè§ˆå™¨'
+        outputer = '<span class="ua_2345explorer"><i class="fa fa-globe"></i> 2345王牌浏览器'
     } else if (r = e.match(/2345chrome/ig)) {
-        outputer = '<span class="ua_2345chrome"><i class="fa fa-globe"></i> 2345åŠ é€Ÿæµè§ˆå™¨'
+        outputer = '<span class="ua_2345chrome"><i class="fa fa-globe"></i> 2345加速浏览器'
     } else if (r = e.match(/LBBROWSER/ig)) {
-        outputer = '<span class="ua_lbbrowser"><i class="fa fa-globe"></i> çŒŽè±¹å®‰å…¨æµè§ˆå™¨'
+        outputer = '<span class="ua_lbbrowser"><i class="fa fa-globe"></i> 猎豹安全浏览器'
     } else if (r = e.match(/MicroMessenger\/([^\s]+)/ig)) {
         var r1 = r[0].split("/");
-        outputer = '<span class="ua_qq"><i class="fa fa-weixin"></i> å¾®ä¿¡'
+        outputer = '<span class="ua_qq"><i class="fa fa-weixin"></i> 微信'
         /*.split('/')[0]*/
     } else if (r = e.match(/QQBrowser\/([^\s]+)/ig)) {
         var r1 = r[0].split("/");
-        outputer = '<span class="ua_qq"><i class="fa fa-qq"></i> QQæµè§ˆå™¨'
+        outputer = '<span class="ua_qq"><i class="fa fa-qq"></i> QQ浏览器'
         /*.split('/')[0]*/
     } else if (r = e.match(/QQ\/([^\s]+)/ig)) {
         var r1 = r[0].split("/");
-        outputer = '<span class="ua_qq"><i class="fa fa-qq"></i> QQæµè§ˆå™¨'
+        outputer = '<span class="ua_qq"><i class="fa fa-qq"></i> QQ浏览器'
         /*.split('/')[0]*/
     } else if (r = e.match(/MiuiBrowser\/([^\s]+)/ig)) {
         var r1 = r[0].split("/");
-        outputer = '<span class="ua_mi"><i class="fa fa-globe"></i> Miuiæµè§ˆå™¨'
+        outputer = '<span class="ua_mi"><i class="fa fa-globe"></i> Miui浏览器'
         /*.split('/')[0]*/
     } else if (r = e.match(/Chrome([\d]*)\/([^\s]+)/ig)) {
         var r1 = r[0].split("/");
@@ -89,7 +89,7 @@ function ua(e) {
         outputer = '<span class="ua_ie"><i class="fa fa-internet-explorer"></i> IE' + ' ' + r[0]
         /*.replace('MSIE', '').split('.')[0]*/
     } else {
-        outputer = '<span class="ua_other"><i class="fa fa-globe"></i> å…¶å®ƒæµè§ˆå™¨'
+        outputer = '<span class="ua_other"><i class="fa fa-globe"></i> 其它浏览器'
     }
     if (checkMobile()) {
         Mobile = '<br><br>';
@@ -131,11 +131,11 @@ function os(e) {
     } else if (e.match(/symbian/ig)) {
         os = '<span class="os_nokia"><i class="fa fa-mobile"></i> Nokia SymbianOS'
     } else {
-        os = '<span class="os_other"><i class="fa fa-desktop"></i> å…¶å®ƒæ“ä½œç³»ç»Ÿ'
+        os = '<span class="os_other"><i class="fa fa-desktop"></i> 其它操作系统'
     }
     return os + "</span>";
 }
-//æ˜¾UAç»“æŸ
+//显UA结束
 
 (function(e, t, n) {
     function at(e, t) {
