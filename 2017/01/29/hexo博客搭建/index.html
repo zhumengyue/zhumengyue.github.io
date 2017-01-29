@@ -15,13 +15,16 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="标签 ＆ 类别">
-<meta property="og:url" content="http://hzmyj.github.io/tags/index.html">
+<meta name="description" content="本文旨在记录搭建Hexo博客的过程，希望对到访本页的友人一点帮助。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 博客搭建">
+<meta property="og:url" content="http://hzmyj.github.io/2017/01/29/hexo博客搭建/index.html">
 <meta property="og:site_name" content="Lonely Ronin's Blog">
-<meta property="og:updated_time" content="2017-01-29T07:47:07.793Z">
+<meta property="og:description" content="本文旨在记录搭建Hexo博客的过程，希望对到访本页的友人一点帮助。">
+<meta property="og:updated_time" content="2017-01-29T10:27:25.380Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="标签 ＆ 类别">
+<meta name="twitter:title" content="Hexo 博客搭建">
+<meta name="twitter:description" content="本文旨在记录搭建Hexo博客的过程，希望对到访本页的友人一点帮助。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -53,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>标签 ＆ 类别 | Lonely Ronin&#39;s Blog</title>
+<title>Hexo 博客搭建 | Lonely Ronin&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -63,7 +66,7 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
+        isPost: true,
         isArchive: false,
         isTag: false,
         isCategory: false,
@@ -269,11 +272,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-hexo博客搭建" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/tags/index.html" class="article-date">
-      <time datetime="2017-01-29T07:44:37.000Z" itemprop="datePublished">2017-01-29</time>
+      <a href="/2017/01/29/hexo博客搭建/" class="article-date">
+      <time datetime="2017-01-29T09:08:55.000Z" itemprop="datePublished">2017-01-29</time>
 </a>
 
 
@@ -288,7 +291,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      标签 ＆ 类别
+      Hexo 博客搭建
     </h1>
   
 
@@ -296,8 +299,16 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+    </div>
+
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/教程/">教程</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -305,96 +316,149 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <style>
-    .article-meta { display: none; }
-    #container .article .article-title { padding-right: 0; }
-    .article-header {
-        padding: 0;
-        padding-top: 26px;
-        border-left: none;
-        text-align: center;
-    }
-    .article-header:hover { border-left: none; }
-    .article-title { font-size: 1.6em }
-    .article-entry hr { margin: 0;}
-    .article-meta,
-    #container .article-info-post.article-info { display: none;}
-    #container .article .article-title { padding: 0; }
-</style>
+        <p>　　本文旨在记录搭建Hexo博客的过程，希望对到访本页的友人一点帮助。<br><a id="more"></a><br>　　博主的博客由于一些原因前后重新搭建了四次，也遇到过不少障碍，有时候这次记得的步骤下次就忘记了，特写一篇较为详尽的博客来记录，以便回访。</p>
+<h2 id="一、前期准备"><a href="#一、前期准备" class="headerlink" title="一、前期准备"></a>一、前期准备</h2><ul>
+<li>注册Github账号</li>
+<li>安装Git for Windows和Node.js</li>
+</ul>
+<h3 id="Git-for-windows部署"><a href="#Git-for-windows部署" class="headerlink" title="Git for windows部署"></a>Git for windows部署</h3><p>首先将之前注册的github账号和邮箱初始化给电脑<br>桌面右键运行git bash，依次输入如下指令</p>
+<blockquote>
+<p>git config –global user.name “yourname”<br>git config –global user.email “youremail”</p>
+</blockquote>
+<h2 id="二、SSH-key的相关设置"><a href="#二、SSH-key的相关设置" class="headerlink" title="二、SSH key的相关设置"></a>二、SSH key的相关设置</h2><h3 id="Windows下配置SSH并连接到github、github配置SSH-Key"><a href="#Windows下配置SSH并连接到github、github配置SSH-Key" class="headerlink" title="Windows下配置SSH并连接到github、github配置SSH Key"></a>Windows下配置SSH并连接到github、github配置SSH Key</h3><ul>
+<li>检查本机是否有SSH Key设置<br>输入命令<code>cd ~/.ssh</code></li>
+</ul>
+<ol>
+<li>若没有，则提示： No such file or director  继续后面步骤</li>
+<li>若有，则进入 ~/.ssh路径，<code>rm *</code>删除所有文件</li>
+</ol>
+<h4 id="使用Git-Bash生成新的ssh-key"><a href="#使用Git-Bash生成新的ssh-key" class="headerlink" title="使用Git Bash生成新的ssh key"></a>使用Git Bash生成新的ssh key</h4><p>输入<br><code>cd ~</code>保证当前路径在”~”下<br><code>ssh-keygen -t rsa -C &quot;xxxx@yy.com&quot;</code>填写真实的邮箱地址，建议选择注册github时的邮箱</p>
+<h4 id="添加ssh-key到github"><a href="#添加ssh-key到github" class="headerlink" title="添加ssh key到github"></a>添加ssh key到github</h4><ol>
+<li>登录github，点击”▽”-settings-ssh keys-add ssh key</li>
+<li>复制id_rsa.pub(用TXT打开，全选)的公钥，添加到相应位置</li>
+<li>测试ssh keys是否配置成功,输入指令<blockquote>
+<p>ssh -T git@github.com</p>
+</blockquote>
+</li>
+</ol>
+<p>　　若出现”Hi xxx! You’ve successfully authenticated, but GitHub does not provide shell access”，则设置成功</p>
+<h2 id="三、远程连接"><a href="#三、远程连接" class="headerlink" title="三、远程连接"></a>三、远程连接</h2><h3 id="将本地项目通过SSH-push到github"><a href="#将本地项目通过SSH-push到github" class="headerlink" title="将本地项目通过SSH push到github"></a>将本地项目通过SSH push到github</h3><ol>
+<li>1 创建目录 <blockquote>
+<p>mkdir test<br>cd test</p>
+</blockquote>
+</li>
+<li>2 初始化<blockquote>
+<p>git init </p>
+</blockquote>
+</li>
+<li>3.创建 hello.md文件<blockquote>
+<p>echo “这是一次测试test ssh key” &gt; hello.md</p>
+</blockquote>
+</li>
+<li>4 提交到本地<blockquote>
+<p>git add .<br>git commit -m “add hello.md”   #提交记录说明 </p>
+</blockquote>
+</li>
+<li>5 提交到github<blockquote>
+<p>git remote add origin ‘粘贴复制test ssh key的ssh路径’  #<br>git push -u origin master</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="Hexo部署"><a href="#Hexo部署" class="headerlink" title="Hexo部署"></a>Hexo部署</h3><ul>
+<li>执行命令<blockquote>
+<p>npm install hexo -g       #全局安装hexo</p>
+</blockquote>
+</li>
+</ul>
+<p>　　第一次执行这个操作时，卡在安装过程。后卸载现有node.js并在<a href="https://www.baidu.com/link?url=AqumB_lIyL0_EkHfKb3fmmaUM_RLVYkTGcN7Uz_O_7y&amp;wd=&amp;eqid=b724fee7000b232d0000000557f3401f" target="_blank" rel="external">官网</a>下载最新版本，安装后依然无用。后来在寝室完成安装hexo。推测和下载网速有关。</p>
+<ul>
+<li>新建目录并转移到目录下<blockquote>
+<p>mkdir blog<br>cd blog</p>
+</blockquote>
+</li>
+<li>初始化hexo<blockquote>
+<p>hexo init</p>
+</blockquote>
+</li>
+<li>启动<blockquote>
+<p>hexo server</p>
+</blockquote>
+</li>
+</ul>
+<p>在浏览器中访问localhost:4000，若成则说明hexo配置成功(若按下ctrl+c则停止访问)</p>
+<ul>
+<li>将本地hexo与远程github关联</li>
+<li>修改配置文件_config.yml，用文本编辑器打开，修改最下面deployer属性<br>type/repository/branch</li>
+<li>安装hexo-deployer-git<blockquote>
+<p>npm install hexo-deployer-git -S</p>
+</blockquote>
+</li>
+<li>执行hexo g生成静态网页</li>
+<li>执行hexo d部署到远程github</li>
+</ul>
+<p>　　至此可以直接访问博客，目的达到！   </p>
+<p>　　<strong>由上面所有步骤创建出来的只是一个最简单的博客界面，里面的主题、文章 、排版等需要自己编写和设置。</strong></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>　　讲道理，自己动手做一个东西，感觉是非常奇妙的。你需要自己解决所遇到的各种问题，有时候可能只是拼写错误这种小事，有时会出现一个新错误，不过问问度娘就可以解决掉，但你也可能遇到一些无法理解也根本找不到解决办法的“玄学问题”，也许只能重新来过了。<br>　　你需要耐心的去分析、解决问题，在后来的操作过程中更加仔细、认真。一些错误的出现，也会对一些代码、命令语句、错误报告有更深入的理解。这个过程是宝贵的。<br>　　在写博客时，需要自己去学习一下markdown语法，这个语法特别简单，用着很舒心。<br>　　学习的过程永远是最享受最富有乐趣的，尤其是当你回过头来看时。</p>
 
-
-    <!-- Tag Cloud Page -->
-    <hr>
-<br>
-<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">2</span></li></ul>
-
-<p class="count"></p>
-
-<div class="tags">
-    <a href="/tags/hexo/" style="font-size: 16px; color: #808080">hexo</a> <a href="/tags/小试牛刀/" style="font-size: 16px; color: #808080">小试牛刀</a> <a href="/tags/教程/" style="font-size: 16px; color: #808080">教程</a>
-</div>
-<style>
-    .category-list li{
-        display: inline-block;
-        margin: 0 1em .5em 0;
-        padding: 4px;
-        border: 1px solid lightgray;
-        font-size: 1.2rem;
-    }
-    .category-list a { color: gray; }
-    .category-list-item:hover a {
-        color: gray;
-        text-decoration: none;
-    }
-    .category-list-count {
-        margin-left: 2px;
-        font-size: .9rem;
-    }
-    .article-entry ul li:before{ display: none; }
-    .article-inner { text-align: center; }
-    .tags {
-        max-width: 42em;
-        margin: 2em auto;
-        margin-top: 0em;
-    }
-    .tags a {
-        margin-right: 1em;
-        line-height: 65px;
-        border-bottom: 1px solid gray;
-        white-space: nowrap;
-        transition: border-bottom .5s;
-    }
-    .tags a:hover {
-        border-bottom: 3px dotted gray;
-        text-decoration: none;
-    }
-    #count > span {
-        margin: auto .2em;
-        font-weight: bold;
-    }
-</style>
-
-<!-- Count tags and categories -->
-<p id="count">
-        已有<span><script>document.write($(".category-list-item").length)</script></span>个分类，
-        共计<span><script>document.write($(".tags > a").length)</script></span>个标签
-</p>
-<script>
-    $('#count').appendTo('.count');
-</script>
-
-          
-        
       
     </div>
     
   </div>
   
     
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/01/29/hexo博客搭建/">Hexo 博客搭建</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">L丶Ronin</a></p>
+        <p><span>发布时间:</span>2017-01-29, 17:08:55</p>
+        <p><span>最后更新:</span>2017-01-29, 18:27:25</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/01/29/hexo博客搭建/" title="Hexo 博客搭建">http://hzmyj.github.io/2017/01/29/hexo博客搭建/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://hzmyj.github.io/2017/01/29/hexo博客搭建/　　作者: L丶Ronin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
 
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/01/28/hello-world/">
+                    Hello World
+                </a>
+            </div>
+        
+    </nav>
 
   
 </article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、前期准备"><span class="toc-number">1.</span> <span class="toc-text">一、前期准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Git-for-windows部署"><span class="toc-number">1.1.</span> <span class="toc-text">Git for windows部署</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、SSH-key的相关设置"><span class="toc-number">2.</span> <span class="toc-text">二、SSH key的相关设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows下配置SSH并连接到github、github配置SSH-Key"><span class="toc-number">2.1.</span> <span class="toc-text">Windows下配置SSH并连接到github、github配置SSH Key</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用Git-Bash生成新的ssh-key"><span class="toc-number">2.1.1.</span> <span class="toc-text">使用Git Bash生成新的ssh key</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#添加ssh-key到github"><span class="toc-number">2.1.2.</span> <span class="toc-text">添加ssh key到github</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、远程连接"><span class="toc-number">3.</span> <span class="toc-text">三、远程连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#将本地项目通过SSH-push到github"><span class="toc-number">3.1.</span> <span class="toc-text">将本地项目通过SSH push到github</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo部署"><span class="toc-number">3.2.</span> <span class="toc-text">Hexo部署</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">4.</span> <span class="toc-text">小结</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
 
 
 
@@ -412,7 +476,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"标签 ＆ 类别　| Lonely Ronin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Hexo 博客搭建　| Lonely Ronin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -428,7 +492,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="tags/index.html" data-title="标签 ＆ 类别" data-url="http://hzmyj.github.io/tags/index.html"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2017/01/29/hexo博客搭建/" data-title="Hexo 博客搭建" data-url="http://hzmyj.github.io/2017/01/29/hexo博客搭建/"></div>
     <script>
         var duoshuoQuery = {short_name:"hzmyj"};
         var loadComment = function(){
@@ -447,6 +511,24 @@
 </div>
     
 
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/01/28/hello-world/" title="下一篇: Hello World">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/01/29/hexo博客搭建/">Hexo 博客搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/hello-world/">Hello World</a></li></ul>
 
 
 
