@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="L丶Ronin" />
+
+
+
+<meta name="description" content="尝试使用Python编写程序爬取教务处网站上的详细成绩单，并计算GPA。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python-爬虫-获取教务处成绩">
+<meta property="og:url" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/index.html">
+<meta property="og:site_name" content="Lonely Ronin's Blog">
+<meta property="og:description" content="尝试使用Python编写程序爬取教务处网站上的详细成绩单，并计算GPA。">
+<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/1.png">
+<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/2.png">
+<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/3.png">
+<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/4.png">
+<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/5.png">
+<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/6.png">
+<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/7.png">
+<meta property="og:updated_time" content="2017-02-01T03:39:38.738Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python-爬虫-获取教务处成绩">
+<meta name="twitter:description" content="尝试使用Python编写程序爬取教务处网站上的详细成绩单，并计算GPA。">
+<meta name="twitter:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/1.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Lonely Ronin&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/luo.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Python-爬虫-获取教务处成绩 | Lonely Ronin&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?afe0c759e34ef5d91f3fe57d166d7de6";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/luo.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">L丶Ronin</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">脚踏实地，厚积薄发</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">留言板</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/教程/">教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/百度云/">百度云</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://hzmyj.github.io/">L丶Ronin</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">All In Or Nothing</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">L丶Ronin</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/luo.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">L丶Ronin</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">脚踏实地，厚积薄发</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">留言板</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Python-爬虫" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/01/Python-爬虫/" class="article-date">
+      <time datetime="2017-02-01T03:06:59.000Z" itemprop="datePublished">2017-02-01</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python-爬虫-获取教务处成绩
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>　　尝试使用Python编写程序爬取教务处网站上的详细成绩单，并计算GPA。</p>
+<a id="more"></a>
+<h1 id="所需工具"><a href="#所需工具" class="headerlink" title="所需工具"></a>所需工具</h1><ul>
+<li>pycharm  </li>
+<li>anaconda2 / Python2.7</li>
+<li>phantomJS</li>
+</ul>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><ul>
+<li>pycharm是推荐使用的python的IDE，安装即可</li>
+<li>anconda2是 Python 科学技术包的合集，有自己的包管理工具 conda，同时支持pip工具，自带了很多常用的python的库，特别是一些很难安装的库。安装过程中，添加python到环境变量中去。</li>
+<li>python2.7 是官方下载的python安装包，如果不想使用anaconda2，就安装这个，但装完之后，需要用pip去安装python库。添加python到环境变量中去。注意，如果安装了anaconda2就不用装这个，二选一。</li>
+<li>phantomJS 是一个无界面浏览器，作为爬虫的工具使用。无需安装，解压即可。</li>
+</ul>
+<h2 id="安装库"><a href="#安装库" class="headerlink" title="安装库"></a>安装库</h2><p>如果你选择anaconda，只需安装selenium库：命令行输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install selenium</div></pre></td></tr></table></figure></p>
+<p>如果选择官方python，所有使用到的库都要安装，也是使用pip安装，安装BeautifulSoup：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install bs4</div></pre></td></tr></table></figure></p>
+<h1 id="代码编写"><a href="#代码编写" class="headerlink" title="代码编写"></a>代码编写</h1><p>　　<strong>编写步骤主要可分为四个模块：模拟登陆、获取并打印网页源代码、提取需要的元素、写入excel表格并计算</strong></p>
+<h2 id="导入模块"><a href="#导入模块" class="headerlink" title="导入模块"></a>导入模块</h2><p>　　类似C/C++中的头文件一样，把需要的库导入<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> xlrd</div><div class="line"><span class="keyword">import</span> xlwt</div></pre></td></tr></table></figure></p>
+<h2 id="模拟登陆"><a href="#模拟登陆" class="headerlink" title="模拟登陆"></a>模拟登陆</h2><p>　　定义函数 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">receive_code</span><span class="params">(direction)</span>:</span></div></pre></td></tr></table></figure></p>
+<p><strong>注：以下代码在函数receive_code(direction)下</strong></p>
+<h3 id="打开网页"><a href="#打开网页" class="headerlink" title="打开网页"></a>打开网页</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 网站链接</span></div><div class="line">URL = <span class="string">'http://sso.jwc.whut.edu.cn/Certification//toIndex.do'</span></div><div class="line"><span class="comment"># 浏览器路径</span></div><div class="line">phantomjs_path=<span class="string">'E:/phantomjs-2.1.1-windows/bin/phantomjs.exe'</span></div><div class="line">driver = webdriver.PhantomJS(phantomjs_path)</div><div class="line"><span class="comment"># 设置最大等待时间</span></div><div class="line">driver.implicitly_wait(<span class="number">5</span>)</div><div class="line"><span class="comment"># 打开网页</span></div><div class="line">driver.get(URL)</div></pre></td></tr></table></figure>
+<p>　　可设置浏览器最大等待时间，代码为<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">driver.implicitly_wait(time)</div></pre></td></tr></table></figure></p>
+<h3 id="登陆网页"><a href="#登陆网页" class="headerlink" title="登陆网页"></a>登陆网页</h3><p>　　可通过以下方法定位元素（<strong>在网页源代码中</strong>）<br>定位单个元素<br>find_element_by_id<br>find_element_by_name<br>find_element_by_xpath<br>find_element_by_link_text<br>find_element_by_partial_link_text<br>find_element_by_tag_name<br>find_element_by_class_name<br>find_element_by_css_selector</p>
+<p>定位多个元素<br>find_elements_by_name<br>find_elements_by_xpath<br>find_elements_by_link_text<br>find_elements_by_partial_link_text<br>find_elements_by_tag_name<br>find_elements_by_class_name<br>find_elements_by_css_selector<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 通过 name 找到用户名和密码（需要查看网页源代码，后面同）</span></div><div class="line">userName_tag = driver.find_element_by_name(<span class="string">'userName'</span>)</div><div class="line">password_tag = driver.find_element_by_name(<span class="string">'password'</span>)</div><div class="line"><span class="comment"># 模拟登陆，输入学号和密码（要正确的！这不是胡乱填的）</span></div><div class="line">userName_tag.send_keys(<span class="string">'0121510880318'</span>)</div><div class="line">password_tag.send_keys(<span class="string">'xxxxxx'</span>)</div><div class="line">driver.find_element_by_id(<span class="string">'imageField'</span>).submit()</div><div class="line">driver.find_element_by_link_text(<span class="string">'成绩查询'</span>).click()</div><div class="line">driver.find_element_by_link_text(<span class="string">'历史成绩查询'</span>).click()</div><div class="line">select_tag = driver.find_element_by_id(<span class="string">'lscj_xnxq'</span>)</div><div class="line">xnxq_list = [<span class="string">'2015-2016-1'</span>,<span class="string">'2015-2016-2'</span>]</div></pre></td></tr></table></figure></p>
+<p>　　至此模拟进入”历史成绩查询界面”</p>
+<h2 id="打印网页源代码"><a href="#打印网页源代码" class="headerlink" title="打印网页源代码"></a>打印网页源代码</h2><h3 id="获取HTML代码"><a href="#获取HTML代码" class="headerlink" title="获取HTML代码"></a>获取HTML代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> xnxq <span class="keyword">in</span> xnxq_list:</div><div class="line">    <span class="comment"># 点击学年学期</span></div><div class="line">    select_tag.find_element_by_xpath(<span class="string">"//option[@value='&#123;0&#125;']"</span>.format(xnxq)).click()</div><div class="line">    <span class="comment"># 获取 body 中的文本值</span></div><div class="line">    body_str=driver.find_element_by_tag_name(<span class="string">'body'</span>).get_attribute(<span class="string">'innerHTML'</span>)</div></pre></td></tr></table></figure>
+<h3 id="打印到txt文档里"><a href="#打印到txt文档里" class="headerlink" title="打印到txt文档里"></a>打印到txt文档里</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">soup=BeautifulSoup(body_str, <span class="string">'lxml'</span>)</div><div class="line">    <span class="keyword">with</span> open(os.path.join(direction,  xnxq+<span class="string">'.txt'</span>),<span class="string">'w'</span>) <span class="keyword">as</span> f_r:</div><div class="line">    f_r.write(str(soup))</div><div class="line">body_str=driver.find_element_by_tag_name(<span class="string">'body'</span>).get_attribute(<span class="string">'innerHTML'</span>)</div><div class="line">soup=BeautifulSoup(body_str, <span class="string">'lxml'</span>)</div><div class="line"><span class="comment"># 打印并退出</span></div><div class="line"><span class="keyword">print</span> soup</div><div class="line">driver.quit()</div></pre></td></tr></table></figure>
+<h2 id="提取所需元素"><a href="#提取所需元素" class="headerlink" title="提取所需元素"></a>提取所需元素</h2><p>　　定义函数<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_data</span><span class="params">(html_file)</span>:</span></div></pre></td></tr></table></figure></p>
+<p>　　<strong>注：以下代码在函数print_data(html_file)下</strong></p>
+<h3 id="打开之前的TXT文档"><a href="#打开之前的TXT文档" class="headerlink" title="打开之前的TXT文档"></a>打开之前的TXT文档</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> open(html_file,<span class="string">'r'</span>) <span class="keyword">as</span> f_r:</div><div class="line">    text=f_r.read()</div><div class="line">soup=BeautifulSoup(text,<span class="string">'lxml'</span>)</div></pre></td></tr></table></figure>
+<h3 id="通过标签查找元素"><a href="#通过标签查找元素" class="headerlink" title="通过标签查找元素"></a>通过标签查找元素</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 获取 thead 标签</span></div><div class="line">thead=soup.find(<span class="string">'thead'</span>)</div><div class="line"><span class="comment"># 获取 thead 标签下的所有th标签</span></div><div class="line">th_list=[th.get_text() <span class="keyword">for</span> th <span class="keyword">in</span> thead.find_all(<span class="string">'th'</span>)]</div><div class="line"><span class="comment"># 找到标签为 table 且 id 为 undefined</span></div><div class="line">table=soup.find(<span class="string">'table'</span>,id=<span class="string">"undefined"</span>)</div><div class="line"><span class="comment"># 找到td标签</span></div><div class="line">tr_tag_l1 = [td.get_text() <span class="keyword">for</span> td <span class="keyword">in</span> table.find_all(<span class="string">'td'</span>)]</div></pre></td></tr></table></figure>
+<ul>
+<li>注：查找的前提是你要去<strong>查看网页源代码</strong>，看看所需要的元素用哪种查找方法更好</li>
+</ul>
+<p>如图<br><img src="/2017/02/01/Python-爬虫/1.png" alt=""></p>
+<h2 id="写入excel表并计算"><a href="#写入excel表并计算" class="headerlink" title="写入excel表并计算"></a>写入excel表并计算</h2><h3 id="创建excel表"><a href="#创建excel表" class="headerlink" title="创建excel表"></a>创建excel表</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 创建 excel 表</span></div><div class="line">workbook = xlwt.Workbook()</div><div class="line"><span class="comment"># 表单名字</span></div><div class="line">sheet = workbook.add_sheet(<span class="string">"score_info"</span>)</div></pre></td></tr></table></figure>
+<h3 id="写入元素"><a href="#写入元素" class="headerlink" title="写入元素"></a>写入元素</h3><h4 id="写入标题"><a href="#写入标题" class="headerlink" title="写入标题"></a>写入标题</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 使用enumerate()函数，将所有标题写入 excel 第一行</span></div><div class="line"><span class="comment"># 注意，所有的行数和列数都是从 0 开始</span></div><div class="line"><span class="keyword">for</span> x,y <span class="keyword">in</span> enumerate(th_list):</div><div class="line">    <span class="comment"># sheet.write( 行，列，值 ）</span></div><div class="line">    sheet.write(<span class="number">0</span> ,x ,y )</div></pre></td></tr></table></figure>
+<h4 id="写入详细信息"><a href="#写入详细信息" class="headerlink" title="写入详细信息"></a>写入详细信息</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 将相关信息全部写入 excel 表</span></div><div class="line">a = <span class="number">0</span>  <span class="comment"># 计算已写个数，用来换行</span></div><div class="line">t = <span class="number">1</span>  <span class="comment"># 记录一共有几行</span></div><div class="line"><span class="keyword">for</span> b <span class="keyword">in</span> tr_tag_l1:</div><div class="line">    sheet.write(t, a, b)</div><div class="line">    a=a+<span class="number">1</span></div><div class="line">    <span class="comment"># 对于什么时候换行，可以自行查看网页源代码，我是直接数的 O.O</span></div><div class="line">    <span class="keyword">if</span> a==<span class="number">11</span>:</div><div class="line">        <span class="comment"># 换到下一行，第一列</span></div><div class="line">        a=<span class="number">0</span></div><div class="line">        t=t+<span class="number">1</span></div></pre></td></tr></table></figure>
+<h4 id="写入完成，保存文件"><a href="#写入完成，保存文件" class="headerlink" title="写入完成，保存文件"></a>写入完成，保存文件</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">workbook.save(<span class="string">'score.xls'</span>)</div></pre></td></tr></table></figure>
+<h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3><h4 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 读取 excel 文件</span></div><div class="line">wb=xlrd.open_workbook(<span class="string">'score.xls'</span>)</div><div class="line"><span class="comment"># 找到相应的 sheet 表单</span></div><div class="line">sh = wb.sheet_by_name(<span class="string">u'score_info'</span>)</div></pre></td></tr></table></figure>
+<h4 id="计算并写入excel表"><a href="#计算并写入excel表" class="headerlink" title="计算并写入excel表"></a>计算并写入excel表</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 对表中的元素进行计算操作</span></div><div class="line">score_point_sum = <span class="number">0</span> <span class="comment"># 绩点×学分的和</span></div><div class="line">point_sum = <span class="number">0</span> <span class="comment"># 学分总和</span></div><div class="line">line=<span class="number">1</span> <span class="comment"># 行数</span></div><div class="line"><span class="comment"># 在上面统计的总行数 t 之内提取数据计算</span></div><div class="line"><span class="keyword">while</span> line &lt; t :</div><div class="line">    score_point_sum = score_point_sum + float(sh.cell(line,<span class="number">10</span>).value)* float(sh.cell(line,<span class="number">4</span>).value)</div><div class="line">    point_sum = point_sum + float(sh.cell(line,<span class="number">4</span>).value)</div><div class="line">    line=line+<span class="number">1</span></div><div class="line"><span class="comment"># 计算 GPA 并写入 excel 表格</span></div><div class="line">gpa = score_point_sum/point_sum</div><div class="line">sheet.write(t+<span class="number">1</span>,<span class="number">0</span>,<span class="string">'GPA'</span>)</div><div class="line">sheet.write(t+<span class="number">1</span>,<span class="number">1</span>,gpa)</div><div class="line"><span class="keyword">print</span> <span class="string">'GPA:'</span></div><div class="line"><span class="keyword">print</span> gpa</div></pre></td></tr></table></figure>
+<h4 id="再次保存"><a href="#再次保存" class="headerlink" title="再次保存"></a>再次保存</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">workbook.save(<span class="string">'score.xls'</span>)</div></pre></td></tr></table></figure>
+<h2 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</div><div class="line"><span class="comment"># 文件路径（根据实际情况编写）</span></div><div class="line">path =<span class="string">'F:/PythonProject/result/'</span></div><div class="line"><span class="comment"># 执行两个函数</span></div><div class="line">receive_code(path)</div><div class="line">print_data(<span class="string">'F:/PythonProject/result/2015-2016-1.txt'</span>)</div></pre></td></tr></table></figure>
+<h1 id="疑难杂症"><a href="#疑难杂症" class="headerlink" title="疑难杂症"></a>疑难杂症</h1><h2 id="代码细节"><a href="#代码细节" class="headerlink" title="代码细节"></a>代码细节</h2><p>如<br><img src="/2017/02/01/Python-爬虫/2.png" alt=""><br>　　网页源代码明明是<code>name=&quot;userName&quot;</code>，我非要用class name查找，愣是报错半天不知道为啥，后来去检查了一下源码，修改后解决问题</p>
+<p>再比如<br><img src="/2017/02/01/Python-爬虫/3.png" alt=""><br>　　<strong>find_elements返回的是一个列表,对列表里面的元素无法调用get_attribute</strong><br>　　这个我是真心没发现，网上也查不到这个报错啥意思，就多了一个”s”，墨迹了好长时间。。最后多亏了学长，一下子发现了问题</p>
+<h2 id="excel表的相关操作"><a href="#excel表的相关操作" class="headerlink" title="excel表的相关操作"></a>excel表的相关操作</h2><h3 id="标题的写入"><a href="#标题的写入" class="headerlink" title="标题的写入"></a>标题的写入</h3><p>　　查看源代码得知，标题为<code>thead</code>标签下的所有<code>th</code>标签的文本内容，于是使用<code>th_list=[th.get_text() for th in thead.find_all(&#39;th&#39;)]</code>获取到所有的文本值。<br>　　在写入时，需要用到sheet.write()函数，需要写入参数（行、列、内容），本想使用C语言中的多条件for循环，后来发现Python不能这样写。学长告诉我可以使用enumerate()函数（喂这就是PPT的内容好不好），问题解决。</p>
+<h3 id="信息的写入"><a href="#信息的写入" class="headerlink" title="信息的写入"></a>信息的写入</h3><p>　　信息和标题有点不同，标题只有一行，直接sheet.write(0,列，值)即可。但是信息有好多行，这就尴尬了。<br>　　第一次选择获取所有的tr标签，然后写入，结果所有信息都写入了第二行，每一个单元格都是某一课程的所有信息，显然有问题<br>　　第二次，还是选择获取tr标签，然后修改sheet.write()的参数值，得到了下面的结果，虽然换行了，但还是写在一个单元格内<br><img src="/2017/02/01/Python-爬虫/4.png" alt=""><br>　　又仔细看一遍网页源代码，发现如果用tr标签获取，则每次都是获取一整条信息，其实也可以用td标签获取，这样获得的就是单个信息<br><img src="/2017/02/01/Python-爬虫/5.png" alt=""><br>　　这样确实可以单个信息写入单元格，但是，它一整行的写了下去，没有换行，没有换行。。。<br>　　采用最笨的办法，数一下标题一共有几个，使用两个计数元素控制行列值。<br>　　结果第一次换行早了，数据错位<br><img src="/2017/02/01/Python-爬虫/6.png" alt=""><br>　　修改判断条件后，问题解决。</p>
+<h3 id="GPA的计算"><a href="#GPA的计算" class="headerlink" title="GPA的计算"></a>GPA的计算</h3><p>　　excel表中的某个单元格的值可用函数<code>sh.cell(行,列).value</code>获取，然后根据之前的总行数t，可以进行数据计算。<br><img src="/2017/02/01/Python-爬虫/7.png" alt=""><br>　　发现<code>sh.cell(行,列).value</code>函数获取的值是字符串类型，所以无法直接和int型相加。使用float()强制转换类型即可解决。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>　　保存excel文件时，报错IOError: [Errno 13] Permission denied：<br>　　其实这就是因为excel文件一直在打开状态，所以没有权限，关闭后运行程序即可。</p>
+<p>　　还遇到一个小bug，输入自己的学号和密码时，可以正常打印数据并计算<br>　　当我改成别人的账号密码时，运行程序只是成绩信息变了，GPA并没有变- -<br>　　再次执行程序后才显示正确GPA。<br>　　检查了一下代码，感觉问题出在保存excel文件这一步，由于保存和计算的先后顺序，初始顺序是获取数据—计算—保存，所以即使之后的数据变了，<strong>由于没有保存，还是会根据上一次的数据计算</strong>，然后保存。再次执行后，才可根据新数据计算。故应当在打印数据后，先保存一次excel文件。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>　　其实并没有特别的去学Python的语法，这次用到的东西大多数都是封装好的，直接调用即可。<br>　　本以为这个程序的作用是，只要有人在教务处查询绩点，我就可以获取到他的所有信息（现在想想好猥琐啊，但是也好想实现这个功能）。。不过还是学到了不少东西，主要是理解爬虫的思想和方法，以后可仿照此去爬取一个网站的图片、链接之类。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/02/01/Python-爬虫/">Python-爬虫-获取教务处成绩</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">L丶Ronin</a></p>
+        <p><span>发布时间:</span>2017-02-01, 11:06:59</p>
+        <p><span>最后更新:</span>2017-02-01, 11:39:38</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/02/01/Python-爬虫/" title="Python-爬虫-获取教务处成绩">http://hzmyj.github.io/2017/02/01/Python-爬虫/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://hzmyj.github.io/2017/02/01/Python-爬虫/　　作者: L丶Ronin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/01/31/解决网页版百度云大文件下载限制/">
+                    解决网页版百度云大文件下载限制
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#所需工具"><span class="toc-number">1.</span> <span class="toc-text">所需工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境搭建"><span class="toc-number">1.1.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装库"><span class="toc-number">1.2.</span> <span class="toc-text">安装库</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码编写"><span class="toc-number">2.</span> <span class="toc-text">代码编写</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#导入模块"><span class="toc-number">2.1.</span> <span class="toc-text">导入模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模拟登陆"><span class="toc-number">2.2.</span> <span class="toc-text">模拟登陆</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#打开网页"><span class="toc-number">2.2.1.</span> <span class="toc-text">打开网页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#登陆网页"><span class="toc-number">2.2.2.</span> <span class="toc-text">登陆网页</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打印网页源代码"><span class="toc-number">2.3.</span> <span class="toc-text">打印网页源代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取HTML代码"><span class="toc-number">2.3.1.</span> <span class="toc-text">获取HTML代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#打印到txt文档里"><span class="toc-number">2.3.2.</span> <span class="toc-text">打印到txt文档里</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提取所需元素"><span class="toc-number">2.4.</span> <span class="toc-text">提取所需元素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#打开之前的TXT文档"><span class="toc-number">2.4.1.</span> <span class="toc-text">打开之前的TXT文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过标签查找元素"><span class="toc-number">2.4.2.</span> <span class="toc-text">通过标签查找元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写入excel表并计算"><span class="toc-number">2.5.</span> <span class="toc-text">写入excel表并计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建excel表"><span class="toc-number">2.5.1.</span> <span class="toc-text">创建excel表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写入元素"><span class="toc-number">2.5.2.</span> <span class="toc-text">写入元素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#写入标题"><span class="toc-number">2.5.2.1.</span> <span class="toc-text">写入标题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写入详细信息"><span class="toc-number">2.5.2.2.</span> <span class="toc-text">写入详细信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写入完成，保存文件"><span class="toc-number">2.5.2.3.</span> <span class="toc-text">写入完成，保存文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据处理"><span class="toc-number">2.5.3.</span> <span class="toc-text">数据处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#读取文件"><span class="toc-number">2.5.3.1.</span> <span class="toc-text">读取文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#计算并写入excel表"><span class="toc-number">2.5.3.2.</span> <span class="toc-text">计算并写入excel表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#再次保存"><span class="toc-number">2.5.3.3.</span> <span class="toc-text">再次保存</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主函数"><span class="toc-number">2.6.</span> <span class="toc-text">主函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#疑难杂症"><span class="toc-number">3.</span> <span class="toc-text">疑难杂症</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#代码细节"><span class="toc-number">3.1.</span> <span class="toc-text">代码细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#excel表的相关操作"><span class="toc-number">3.2.</span> <span class="toc-text">excel表的相关操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#标题的写入"><span class="toc-number">3.2.1.</span> <span class="toc-text">标题的写入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#信息的写入"><span class="toc-number">3.2.2.</span> <span class="toc-text">信息的写入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GPA的计算"><span class="toc-number">3.2.3.</span> <span class="toc-text">GPA的计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">3.2.4.</span> <span class="toc-text">其他</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小结"><span class="toc-number">4.</span> <span class="toc-text">小结</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Python-爬虫-获取教务处成绩　| Lonely Ronin's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2017/02/01/Python-爬虫/" data-title="Python-爬虫-获取教务处成绩" data-url="http://hzmyj.github.io/2017/02/01/Python-爬虫/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"hzmyj"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//hzmyj.github.io/js/embed.js';
+
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/01/31/解决网页版百度云大文件下载限制/" title="下一篇: 解决网页版百度云大文件下载限制">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/Python-爬虫/">Python-爬虫-获取教务处成绩</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/31/解决网页版百度云大文件下载限制/">解决网页版百度云大文件下载限制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/29/hexo博客搭建/">Hexo 博客搭建</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 L丶Ronin
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂)" + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*)" + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?afe0c759e34ef5d91f3fe57d166d7de6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  </div>
+</body>
+</html>
