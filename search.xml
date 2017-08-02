@@ -319,13 +319,13 @@
 <p>在浏览器中访问localhost:4000，若成则说明hexo配置成功(若按下ctrl+c则停止访问)</p>
 <ul>
 <li>将本地hexo与远程github关联</li>
-<li>修改配置文件_config.yml，用文本编辑器打开，修改最下面deployer属性<br>type/repository/branch</li>
+<li>修改配置文件<code>_config.yml</code>，用文本编辑器打开，修改最下面<code>deployer</code>属性<br><code>type/repository/branch</code></li>
 <li>安装hexo-deployer-git<blockquote>
-<p>npm install hexo-deployer-git -S</p>
+<p><code>npm install hexo-deployer-git -S</code></p>
 </blockquote>
 </li>
-<li>执行hexo g生成静态网页</li>
-<li>执行hexo d部署到远程github</li>
+<li>执行<code>hexo</code>g生成静态网页</li>
+<li>执行<code>hexo d</code>部署到远程github</li>
 </ul>
 <p>　　至此可以直接访问博客，目的达到！   </p>
 <p>　　<strong>由上面所有步骤创建出来的只是一个最简单的博客界面，里面的主题、文章 、排版等需要自己编写和设置。</strong></p>
