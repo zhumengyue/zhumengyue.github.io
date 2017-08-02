@@ -324,7 +324,7 @@
 <p><code>npm install hexo-deployer-git -S</code></p>
 </blockquote>
 </li>
-<li>执行<code>hexo</code>g生成静态网页</li>
+<li>执行<code>hexo g</code>生成静态网页</li>
 <li>执行<code>hexo d</code>部署到远程github</li>
 </ul>
 <p>　　至此可以直接访问博客，目的达到！   </p>
