@@ -18,21 +18,21 @@
 <meta name="description" content="尝试使用Python编写程序爬取教务处网站上的详细成绩单，并计算GPA。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python-爬虫-获取教务处成绩">
-<meta property="og:url" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/index.html">
+<meta property="og:url" content="http://zhumengyue.github.io/2017/02/01/Python-爬虫/index.html">
 <meta property="og:site_name" content="Lonely Ronin's Blog">
 <meta property="og:description" content="尝试使用Python编写程序爬取教务处网站上的详细成绩单，并计算GPA。">
-<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/1.png">
-<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/2.png">
-<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/3.png">
-<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/4.png">
-<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/5.png">
-<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/6.png">
-<meta property="og:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/7.png">
+<meta property="og:image" content="http://zhumengyue.github.io/Python-爬虫/1.png">
+<meta property="og:image" content="http://zhumengyue.github.io/Python-爬虫/2.png">
+<meta property="og:image" content="http://zhumengyue.github.io/Python-爬虫/3.png">
+<meta property="og:image" content="http://zhumengyue.github.io/Python-爬虫/4.png">
+<meta property="og:image" content="http://zhumengyue.github.io/Python-爬虫/5.png">
+<meta property="og:image" content="http://zhumengyue.github.io/Python-爬虫/6.png">
+<meta property="og:image" content="http://zhumengyue.github.io/Python-爬虫/7.png">
 <meta property="og:updated_time" content="2017-07-26T17:54:41.257Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python-爬虫-获取教务处成绩">
 <meta name="twitter:description" content="尝试使用Python编写程序爬取教务处网站上的详细成绩单，并计算GPA。">
-<meta name="twitter:image" content="http://hzmyj.github.io/2017/02/01/Python-爬虫/1.png">
+<meta name="twitter:image" content="http://zhumengyue.github.io/Python-爬虫/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -367,7 +367,7 @@
 <ul>
 <li>注：查找的前提是你要去<strong>查看网页源代码</strong>，看看所需要的元素用哪种查找方法更好</li>
 </ul>
-<p>如图<br><img src="/2017/02/01/Python-爬虫/1.png" alt=""></p>
+<p>如图<br><img src="Python-爬虫/1.png" alt=""></p>
 <h2 id="写入excel表并计算"><a href="#写入excel表并计算" class="headerlink" title="写入excel表并计算"></a>写入excel表并计算</h2><h3 id="创建excel表"><a href="#创建excel表" class="headerlink" title="创建excel表"></a>创建excel表</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 创建 excel 表</span></div><div class="line">workbook = xlwt.Workbook()</div><div class="line"><span class="comment"># 表单名字</span></div><div class="line">sheet = workbook.add_sheet(<span class="string">"score_info"</span>)</div></pre></td></tr></table></figure>
 <h3 id="写入元素"><a href="#写入元素" class="headerlink" title="写入元素"></a>写入元素</h3><h4 id="写入标题"><a href="#写入标题" class="headerlink" title="写入标题"></a>写入标题</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 使用enumerate()函数，将所有标题写入 excel 第一行</span></div><div class="line"><span class="comment"># 注意，所有的行数和列数都是从 0 开始</span></div><div class="line"><span class="keyword">for</span> x,y <span class="keyword">in</span> enumerate(th_list):</div><div class="line">    <span class="comment"># sheet.write( 行，列，值 ）</span></div><div class="line">    sheet.write(<span class="number">0</span> ,x ,y )</div></pre></td></tr></table></figure>
 <h4 id="写入详细信息"><a href="#写入详细信息" class="headerlink" title="写入详细信息"></a>写入详细信息</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 将相关信息全部写入 excel 表</span></div><div class="line">a = <span class="number">0</span>  <span class="comment"># 计算已写个数，用来换行</span></div><div class="line">t = <span class="number">1</span>  <span class="comment"># 记录一共有几行</span></div><div class="line"><span class="keyword">for</span> b <span class="keyword">in</span> tr_tag_l1:</div><div class="line">    sheet.write(t, a, b)</div><div class="line">    a=a+<span class="number">1</span></div><div class="line">    <span class="comment"># 对于什么时候换行，可以自行查看网页源代码，我是直接数的 O.O</span></div><div class="line">    <span class="keyword">if</span> a==<span class="number">11</span>:</div><div class="line">        <span class="comment"># 换到下一行，第一列</span></div><div class="line">        a=<span class="number">0</span></div><div class="line">        t=t+<span class="number">1</span></div></pre></td></tr></table></figure>
@@ -376,11 +376,11 @@
 <h4 id="计算并写入excel表"><a href="#计算并写入excel表" class="headerlink" title="计算并写入excel表"></a>计算并写入excel表</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 对表中的元素进行计算操作</span></div><div class="line">score_point_sum = <span class="number">0</span> <span class="comment"># 绩点×学分的和</span></div><div class="line">point_sum = <span class="number">0</span> <span class="comment"># 学分总和</span></div><div class="line">line=<span class="number">1</span> <span class="comment"># 行数</span></div><div class="line"><span class="comment"># 在上面统计的总行数 t 之内提取数据计算</span></div><div class="line"><span class="keyword">while</span> line &lt; t :</div><div class="line">    score_point_sum = score_point_sum + float(sh.cell(line,<span class="number">10</span>).value)* float(sh.cell(line,<span class="number">4</span>).value)</div><div class="line">    point_sum = point_sum + float(sh.cell(line,<span class="number">4</span>).value)</div><div class="line">    line=line+<span class="number">1</span></div><div class="line"><span class="comment"># 计算 GPA 并写入 excel 表格</span></div><div class="line">gpa = score_point_sum/point_sum</div><div class="line">sheet.write(t+<span class="number">1</span>,<span class="number">0</span>,<span class="string">'GPA'</span>)</div><div class="line">sheet.write(t+<span class="number">1</span>,<span class="number">1</span>,gpa)</div><div class="line"><span class="keyword">print</span> <span class="string">'GPA:'</span></div><div class="line"><span class="keyword">print</span> gpa</div></pre></td></tr></table></figure>
 <h4 id="再次保存"><a href="#再次保存" class="headerlink" title="再次保存"></a>再次保存</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">workbook.save(<span class="string">'score.xls'</span>)</div></pre></td></tr></table></figure>
 <h2 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</div><div class="line"><span class="comment"># 文件路径（根据实际情况编写）</span></div><div class="line">path =<span class="string">'F:/PythonProject/result/'</span></div><div class="line"><span class="comment"># 执行两个函数</span></div><div class="line">receive_code(path)</div><div class="line">print_data(<span class="string">'F:/PythonProject/result/2015-2016-1.txt'</span>)</div></pre></td></tr></table></figure>
-<h1 id="疑难杂症"><a href="#疑难杂症" class="headerlink" title="疑难杂症"></a>疑难杂症</h1><h2 id="代码细节"><a href="#代码细节" class="headerlink" title="代码细节"></a>代码细节</h2><p>如<br><img src="/2017/02/01/Python-爬虫/2.png" alt=""><br>　　网页源代码明明是<code>name=&quot;userName&quot;</code>，我非要用class name查找，愣是报错半天不知道为啥，后来去检查了一下源码，修改后解决问题</p>
-<p>再比如<br><img src="/2017/02/01/Python-爬虫/3.png" alt=""><br>　　<strong>find_elements返回的是一个列表,对列表里面的元素无法调用get_attribute</strong><br>　　这个我是真心没发现，网上也查不到这个报错啥意思，就多了一个”s”，墨迹了好长时间。。最后多亏了学长，一下子发现了问题</p>
+<h1 id="疑难杂症"><a href="#疑难杂症" class="headerlink" title="疑难杂症"></a>疑难杂症</h1><h2 id="代码细节"><a href="#代码细节" class="headerlink" title="代码细节"></a>代码细节</h2><p>如<br><img src="Python-爬虫/2.png" alt=""><br>　　网页源代码明明是<code>name=&quot;userName&quot;</code>，我非要用class name查找，愣是报错半天不知道为啥，后来去检查了一下源码，修改后解决问题</p>
+<p>再比如<br><img src="Python-爬虫/3.png" alt=""><br>　　<strong>find_elements返回的是一个列表,对列表里面的元素无法调用get_attribute</strong><br>　　这个我是真心没发现，网上也查不到这个报错啥意思，就多了一个”s”，墨迹了好长时间。。最后多亏了学长，一下子发现了问题</p>
 <h2 id="excel表的相关操作"><a href="#excel表的相关操作" class="headerlink" title="excel表的相关操作"></a>excel表的相关操作</h2><h3 id="标题的写入"><a href="#标题的写入" class="headerlink" title="标题的写入"></a>标题的写入</h3><p>　　查看源代码得知，标题为<code>thead</code>标签下的所有<code>th</code>标签的文本内容，于是使用<code>th_list=[th.get_text() for th in thead.find_all(&#39;th&#39;)]</code>获取到所有的文本值。<br>　　在写入时，需要用到sheet.write()函数，需要写入参数（行、列、内容），本想使用C语言中的多条件for循环，后来发现Python不能这样写。学长告诉我可以使用enumerate()函数（喂这就是PPT的内容好不好），问题解决。</p>
-<h3 id="信息的写入"><a href="#信息的写入" class="headerlink" title="信息的写入"></a>信息的写入</h3><p>　　信息和标题有点不同，标题只有一行，直接sheet.write(0,列，值)即可。但是信息有好多行，这就尴尬了。<br>　　第一次选择获取所有的tr标签，然后写入，结果所有信息都写入了第二行，每一个单元格都是某一课程的所有信息，显然有问题<br>　　第二次，还是选择获取tr标签，然后修改sheet.write()的参数值，得到了下面的结果，虽然换行了，但还是写在一个单元格内<br><img src="/2017/02/01/Python-爬虫/4.png" alt=""><br>　　又仔细看一遍网页源代码，发现如果用tr标签获取，则每次都是获取一整条信息，其实也可以用td标签获取，这样获得的就是单个信息<br><img src="/2017/02/01/Python-爬虫/5.png" alt=""><br>　　这样确实可以单个信息写入单元格，但是，它一整行的写了下去，没有换行，没有换行。。。<br>　　采用最笨的办法，数一下标题一共有几个，使用两个计数元素控制行列值。<br>　　结果第一次换行早了，数据错位<br><img src="/2017/02/01/Python-爬虫/6.png" alt=""><br>　　修改判断条件后，问题解决。</p>
-<h3 id="GPA的计算"><a href="#GPA的计算" class="headerlink" title="GPA的计算"></a>GPA的计算</h3><p>　　excel表中的某个单元格的值可用函数<code>sh.cell(行,列).value</code>获取，然后根据之前的总行数t，可以进行数据计算。<br><img src="/2017/02/01/Python-爬虫/7.png" alt=""><br>　　发现<code>sh.cell(行,列).value</code>函数获取的值是字符串类型，所以无法直接和int型相加。使用float()强制转换类型即可解决。</p>
+<h3 id="信息的写入"><a href="#信息的写入" class="headerlink" title="信息的写入"></a>信息的写入</h3><p>　　信息和标题有点不同，标题只有一行，直接sheet.write(0,列，值)即可。但是信息有好多行，这就尴尬了。<br>　　第一次选择获取所有的tr标签，然后写入，结果所有信息都写入了第二行，每一个单元格都是某一课程的所有信息，显然有问题<br>　　第二次，还是选择获取tr标签，然后修改sheet.write()的参数值，得到了下面的结果，虽然换行了，但还是写在一个单元格内<br><img src="Python-爬虫/4.png" alt=""><br>　　又仔细看一遍网页源代码，发现如果用tr标签获取，则每次都是获取一整条信息，其实也可以用td标签获取，这样获得的就是单个信息<br><img src="Python-爬虫/5.png" alt=""><br>　　这样确实可以单个信息写入单元格，但是，它一整行的写了下去，没有换行，没有换行。。。<br>　　采用最笨的办法，数一下标题一共有几个，使用两个计数元素控制行列值。<br>　　结果第一次换行早了，数据错位<br><img src="Python-爬虫/6.png" alt=""><br>　　修改判断条件后，问题解决。</p>
+<h3 id="GPA的计算"><a href="#GPA的计算" class="headerlink" title="GPA的计算"></a>GPA的计算</h3><p>　　excel表中的某个单元格的值可用函数<code>sh.cell(行,列).value</code>获取，然后根据之前的总行数t，可以进行数据计算。<br><img src="Python-爬虫/7.png" alt=""><br>　　发现<code>sh.cell(行,列).value</code>函数获取的值是字符串类型，所以无法直接和int型相加。使用float()强制转换类型即可解决。</p>
 <h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>　　保存excel文件时，报错IOError: [Errno 13] Permission denied：<br>　　其实这就是因为excel文件一直在打开状态，所以没有权限，关闭后运行程序即可。</p>
 <p>　　还遇到一个小bug，输入自己的学号和密码时，可以正常打印数据并计算<br>　　当我改成别人的账号密码时，运行程序只是成绩信息变了，GPA并没有变- -<br>　　再次执行程序后才显示正确GPA。<br>　　检查了一下代码，感觉问题出在保存excel文件这一步，由于保存和计算的先后顺序，初始顺序是获取数据—计算—保存，所以即使之后的数据变了，<strong>由于没有保存，还是会根据上一次的数据计算</strong>，然后保存。再次执行后，才可根据新数据计算。故应当在打印数据后，先保存一次excel文件。</p>
 <h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>　　其实并没有特别的去学Python的语法，这次用到的东西大多数都是封装好的，直接调用即可。<br>　　本以为这个程序的作用是，只要有人在教务处查询绩点，我就可以获取到他的所有信息（现在想想好猥琐啊，但是也好想实现这个功能）。。不过还是学到了不少东西，主要是理解爬虫的思想和方法，以后可仿照此去爬取一个网站的图片、链接之类。</p>
@@ -397,8 +397,8 @@
         <p><span>发布时间:</span>2017-02-01, 11:06:59</p>
         <p><span>最后更新:</span>2017-07-27, 01:54:41</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/02/01/Python-爬虫/" title="Python-爬虫-获取教务处成绩">http://hzmyj.github.io/2017/02/01/Python-爬虫/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://hzmyj.github.io/2017/02/01/Python-爬虫/　　作者: L丶Ronin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/02/01/Python-爬虫/" title="Python-爬虫-获取教务处成绩">http://zhumengyue.github.io/2017/02/01/Python-爬虫/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://zhumengyue.github.io/2017/02/01/Python-爬虫/　　作者: L丶Ronin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -471,7 +471,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2017/02/01/Python-爬虫/" data-title="Python-爬虫-获取教务处成绩" data-url="http://hzmyj.github.io/2017/02/01/Python-爬虫/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2017/02/01/Python-爬虫/" data-title="Python-爬虫-获取教务处成绩" data-url="http://zhumengyue.github.io/2017/02/01/Python-爬虫/"></div>
     <script>
         var duoshuoQuery = {short_name:"hzmyj"};
         var loadComment = function(){
