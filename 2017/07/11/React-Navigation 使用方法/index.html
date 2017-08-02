@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="L丶Ronin" />
+
+
+
+<meta name="description" content="总结一下react-navigation的使用和心得。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React-Navigation 使用方法">
+<meta property="og:url" content="http://hzmyj.github.io/2017/07/11/React-Navigation 使用方法/index.html">
+<meta property="og:site_name" content="Lonely Ronin's Blog">
+<meta property="og:description" content="总结一下react-navigation的使用和心得。">
+<meta property="og:updated_time" content="2017-08-02T06:25:06.186Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React-Navigation 使用方法">
+<meta name="twitter:description" content="总结一下react-navigation的使用和心得。">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Lonely Ronin&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/luo.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>React-Navigation 使用方法 | Lonely Ronin&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?afe0c759e34ef5d91f3fe57d166d7de6";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/luo.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">L丶Ronin</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">脚踏实地，厚积薄发</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">留言板</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:https://mail.qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com" title="知乎"></a>
+                            
+                                <a class="fa 网易云音乐" href="http://music.163.com/" title="网易云音乐"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PanResponder手势相应/">PanResponder手势相应</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RN/">RN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Navigation/">React-Navigation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/教程/">教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/百度云/">百度云</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自用笔记/">自用笔记</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://hzmyj.github.io/">L丶Ronin</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">All In Or Nothing</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">L丶Ronin</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/luo.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">L丶Ronin</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">脚踏实地，厚积薄发</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">留言板</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:https://mail.qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com" title="知乎"></a>
+                            
+                                <a class="fa 网易云音乐" target="_blank" href="http://music.163.com/" title="网易云音乐"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-React-Navigation 使用方法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/11/React-Navigation 使用方法/" class="article-date">
+      <time datetime="2017-07-11T14:37:23.000Z" itemprop="datePublished">2017-07-11</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      React-Navigation 使用方法
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/术业专攻/">术业专攻</a><a class="article-category-link" href="/categories/术业专攻/技术/">技术</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RN/">RN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React-Navigation/">React-Navigation</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>总结一下react-navigation的使用和心得。</p>
+<a id="more"></a>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>　　新做一个项目，第一次接触<code>react-native</code>，界面主要涉及轮播，tab-view，抽屉，导航等等。在官方文档中看到了<code>Navigator</code>的存在，虽然上面说已被<code>react-navigation</code>替代，但仅仅以为是个单纯的页面跳转组件，想着先把主页做的差不多了，回头学一下这个，加上跳转即可。于是乎找了n多的第三方组件…比如<code>react-native-banner</code>，<code>react-native-swiper</code>，<code>react-native-drawer-layout</code>，<code>react-native-scrollable-tab-view</code>，<code>react-native-side-menu</code>，<code>react-native-tab-view</code>等等。。而且有的第三方组件还不是特别好用，或者两者之间兼容不太好，又因为刚学RN，自己动手封装组件有技术困难 = =</p>
+<p>　　然后就回头看了一下<code>react-navigation</code>，发现这货包含了上面好多功能，什么tab-view，页面跳转，抽屉视图等等，得，学一下，代码翻新好了。</p>
+<h2 id="react-navigation是什么"><a href="#react-navigation是什么" class="headerlink" title="react-navigation是什么"></a>react-navigation是什么</h2><p>　　navigation，即主要用来实现页面跳转，现在App基本不存在单页，所以Navigation的使用越来越多。而react-native开源以来，其原有的Navigation组件一直存在让人头痛的问题，即导航跳转不流畅。终于FB坐不住了，重新做了一个react-navigation并大力推广，且从RN0.43版本开始，<strong>官方将停止维护Navigator</strong>，建议开发者们迁移到新的<a href="https://reactnavigation.org/" target="_blank" rel="external">react-navigation</a>库(文档地址可能需要翻墙)。</p>
+<p>新的<code>react-navigation</code>致力于解决导航卡顿，数据传递，Tabbar和navigator布局，支持<code>redux</code>。虽然现在功能还不完善，但无论从性能还是易用性上都要大大好于老的Navigator，还是很有必要学习和使用(不用也没什么办法，与其找第三方库，还不如…)</p>
+<h2 id="react-navigation基本使用"><a href="#react-navigation基本使用" class="headerlink" title="react-navigation基本使用"></a>react-navigation基本使用</h2><p>react-navigation主要包括三类组件</p>
+<ol>
+<li><p>StackNavigator：用来跳转页面和传递参数</p>
+</li>
+<li><p>TabNavigator：类似底部导航栏，用来在同一屏幕下切换不同界面</p>
+</li>
+<li><p>DrawerNavigator：侧滑菜单导航栏，用于轻松设置带抽屉导航的屏幕</p>
+</li>
+</ol>
+<h3 id="StackNavigator基本用法-amp-amp-属性介绍"><a href="#StackNavigator基本用法-amp-amp-属性介绍" class="headerlink" title="StackNavigator基本用法 &amp;&amp; 属性介绍"></a>StackNavigator基本用法 &amp;&amp; 属性介绍</h3><p>Simple  Example</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">const MyApp = StackNavigator(&#123;</div><div class="line">    MyTab: &#123;</div><div class="line">        screen: MyTab,</div><div class="line">    &#125;,</div><div class="line">    Detail: &#123;</div><div class="line">        screen: Detail,</div><div class="line">        navigationOptions:&#123;</div><div class="line">            headerTitle:&apos;详情&apos;,</div><div class="line">            headerBackTitle:null,</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">&#125;, &#123;</div><div class="line">    headerMode: &apos;screen&apos;,</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h4 id="导航配置"><a href="#导航配置" class="headerlink" title="导航配置"></a>导航配置</h4><p><code>screen</code>：对应界面名称，即被<code>import</code>的页面，<code>screen</code>前面为自定义的页面名称，为方便一般设成与后面相同。</p>
+<p><code>navigationOptions</code>：配置StackNavigator的一些属性。</p>
+<ul>
+<li><code>title</code>：标题，如果在此设置，导航栏和标签栏(如果有标签栏的话)的title会变成一样，不推荐。</li>
+<li><code>headerTitle</code>：设置导航栏标题，推荐使用这种方法。</li>
+<li><code>header</code>：设置导航属性，可以使用<code>header: (......)</code>来自定义整个导航样式，或设为<code>null</code>隐藏导航栏。</li>
+<li><code>headerBackTitle</code>：设置导航栏左侧返回箭头后面的文字，默认上一个页面的标题，可自定义，也可以设为<code>null</code>。</li>
+<li><code>headerRight</code>：设置导航栏右侧，用法类似<code>header</code>。</li>
+<li><code>headerLeft</code>：设置导航栏左侧，用法类似<code>header</code>。</li>
+<li><code>headerStyle</code>：设置导航栏样式，宽高颜色等，可分别用<code>elevation: 0</code>和<code>shadowOpacity:0</code>去除安卓/IOS导航栏底部的阴影。</li>
+<li><code>headerTitleStyle</code>：设置导航条文字样式。安卓上如果要设置文字居中，只要调价<code>alignSelf:&#39;center&#39;</code>即可。</li>
+</ul>
+<h4 id="导航视觉效果"><a href="#导航视觉效果" class="headerlink" title="导航视觉效果"></a>导航视觉效果</h4><p><code>mode</code>：定义跳转风格</p>
+<ul>
+<li><code>card</code>：使用iOS和安卓默认的风格。</li>
+<li><code>modal</code>：iOS独有的使屏幕从底部画出。类似iOS的present效果</li>
+</ul>
+<p><code>headerMode</code>：边缘滑动返回上级页面时动画效果。</p>
+<ul>
+<li><code>float</code>：iOS默认的效果，可以看到一个明显的过渡动画。</li>
+<li><code>screen</code>：滑动过程中，整个页面都会返回。</li>
+<li><code>none</code>：没有动画。</li>
+</ul>
+<p><code>cardStyle</code>：自定义设置跳转效果。</p>
+<h3 id="TabNavigator-基本用法-amp-amp-属性介绍"><a href="#TabNavigator-基本用法-amp-amp-属性介绍" class="headerlink" title="TabNavigator 基本用法 &amp;&amp; 属性介绍"></a>TabNavigator 基本用法 &amp;&amp; 属性介绍</h3><p>Simple Example</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">class MyHomeScreen extends React.Component &#123;</div><div class="line">  static navigationOptions = &#123;</div><div class="line">    tabBarLabel: &apos;Home&apos;,</div><div class="line">    tabBarIcon: (&#123; tintColor &#125;) =&gt; (</div><div class="line">      &lt;Image</div><div class="line">        source=&#123;require(&apos;./chats-icon.png&apos;)&#125;</div><div class="line">        style=&#123;[styles.icon, &#123;tintColor: tintColor&#125;]&#125;</div><div class="line">      /&gt;</div><div class="line">    ),</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      &lt;Button</div><div class="line">        onPress=&#123;() =&gt; this.props.navigation.navigate(&apos;Notifications&apos;)&#125;</div><div class="line">        title=&quot;Go to notifications&quot;</div><div class="line">      /&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class MyNotificationsScreen extends React.Component &#123;</div><div class="line">  static navigationOptions = &#123;</div><div class="line">    tabBarLabel: &apos;Notifications&apos;,</div><div class="line">    tabBarIcon: (&#123; tintColor &#125;) =&gt; (</div><div class="line">      &lt;Image</div><div class="line">        source=&#123;require(&apos;./notif-icon.png&apos;)&#125;</div><div class="line">        style=&#123;[styles.icon, &#123;tintColor: tintColor&#125;]&#125;</div><div class="line">      /&gt;</div><div class="line">    ),</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      &lt;Button</div><div class="line">        onPress=&#123;() =&gt; this.props.navigation.goBack()&#125;</div><div class="line">        title=&quot;Go back home&quot;</div><div class="line">      /&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  icon: &#123;</div><div class="line">    width: 26,</div><div class="line">    height: 26,</div><div class="line">  &#125;,</div><div class="line">&#125;);</div><div class="line"></div><div class="line">const MyApp = TabNavigator(&#123;</div><div class="line">  Home: &#123;</div><div class="line">    screen: MyHomeScreen,</div><div class="line">    navigationOptions:&#123;</div><div class="line">      tabBarLable: &apos;标签Title&apos;</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  Notifications: &#123;</div><div class="line">    screen: MyNotificationsScreen,</div><div class="line">  &#125;,</div><div class="line">&#125;, &#123;</div><div class="line">  tabBarPosition: &apos;bottom&apos;,</div><div class="line">  tabBarOptions: &#123;</div><div class="line">    activeTintColor: &apos;#e91e63&apos;,</div><div class="line">  &#125;,</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h4 id="导航配置-1"><a href="#导航配置-1" class="headerlink" title="导航配置"></a>导航配置</h4><p><code>screen</code>：和<code>StackNavigator</code>的一样的，对应界面名称，可以在其他页面通过这个screen传值和跳转。</p>
+<p><code>navigationOptions</code>：配置TabNavigator的一些属性</p>
+<ul>
+<li><p><code>title</code>：标题，会同时设置导航条和标签栏的title，还是不推荐这种方式。</p>
+</li>
+<li><p><code>tabBarVisible</code>：是否隐藏标签栏。默认不隐藏(true)</p>
+</li>
+<li><p><code>tabBarIcon</code>：设置标签栏的图标。需要给每个都设置。</p>
+</li>
+<li><p><code>tabBarLabel</code>：设置标签栏的title。推荐这个方式。</p>
+<p>其余基本也与<code>StackNavigator</code>相同。</p>
+</li>
+</ul>
+<h4 id="标签栏配置"><a href="#标签栏配置" class="headerlink" title="标签栏配置"></a>标签栏配置</h4><p><code>tabBarPosition</code>：设置tabbar的位置，iOS默认在底部，安卓默认在顶部。（属性值：<code>top</code>，<code>bottom</code>）</p>
+<p><code>swipeEnabled</code>：是否允许在标签之间进行滑动(大标签页的滑动切换)。</p>
+<p><code>animationEnabled</code>：点击标签切换时，是否显示动画(即左右滑动切换效果)</p>
+<p><code>lazy</code>：是否根据需要懒惰呈现标签，而不是提前制作，意思是在app打开的时候将底部标签栏全部加载，默认<code>false</code>,推荐改成<code>true</code>哦。</p>
+<p><code>backBehavior</code>：按 back 键是否跳转到第一个Tab(首页)， <code>none</code> 为不跳转。</p>
+<p><code>tabBarOptions</code>：配置标签栏的一些属性(这里只列举Android的常用属性)</p>
+<ul>
+<li><code>activeTintColor</code>：label和icon的前景色 活跃状态下（选中） 。</li>
+<li><code>inactiveTintColor</code>：label和icon的前景色 不活跃状态下(未选中)。</li>
+<li><code>showIcon</code>：是否显示图标，默认关闭。</li>
+<li><code>showLabel</code>：是否显示label，默认开启。</li>
+<li><code>style</code>：tabbar的样式。</li>
+<li><code>labelStyle</code>：label的样式。</li>
+<li><code>upperCaseLabel</code>：是否使标签大写，默认为true。</li>
+<li><code>pressColor</code>：material涟漪效果的颜色（安卓版本需要大于5.0）</li>
+<li><code>pressOpacity</code>：按压标签的透明度变化（安卓版本需要小于5.0）。</li>
+<li><code>scrollEnabled</code>：是否启用可滚动选项卡。</li>
+<li><code>tabStyle</code>：tab的样式。</li>
+<li><code>indicatorStyle</code>：标签指示器的样式对象（选项卡底部的行）。安卓底部会多出一条线，可以将<code>height</code>设置为0来暂时解决这个问题。</li>
+<li><code>labelStyle</code>：label的样式。</li>
+<li><code>iconStyle</code>：图标的样式。</li>
+</ul>
+<h4 id="另一种配置方式"><a href="#另一种配置方式" class="headerlink" title="另一种配置方式"></a>另一种配置方式</h4><p>通过以下代码配置当前页面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">static navigationOptions = (&#123;navigation,screenProps&#125;) =&gt; (&#123;</div><div class="line">  header: null,</div><div class="line">  tabBarLabel: &apos;Notifications&apos;,</div><div class="line">  // ......</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">navigate(&apos;Detail&apos;,&#123;</div><div class="line">                   title:&apos;图片详情&apos;,</div><div class="line">                   url:item.url,</div><div class="line">                   &#125;);</div></pre></td></tr></table></figure>
+<p><code>Detail</code>：在<code>StackNavigator</code>中注册的页面，需要一一对应，才能跳转到相应的页面<br><code>title</code>：在跳转的页面可以通过<code>this.props.navigation.state.params.title</code>获取到这个参数。参数名字可以随便填写，都可以通过<code>this.props.navigation.state.params.xxx</code>获取。</p>
+<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><h3 id="react-navigation和react-native-swpier无法共用"><a href="#react-navigation和react-native-swpier无法共用" class="headerlink" title="react-navigation和react-native-swpier无法共用"></a>react-navigation和react-native-swpier无法共用</h3><p>　　React Native有一个第三方的组件可以实现轮播功能，即<code>react-native-swiper</code>。但是在进行Android开发时，如果同时使用了<code>react-navigation</code>的<code>TabNavigator</code>导航，会出现轮播点以及左右按钮可以显示，但图片内容不显示的问题(图片占位置，轮播组件也可以正常使用，即手动/自动播放，但图片区域无内容)。</p>
+<p>　　发现，如果用到了可滚动组件例如SectionList,ScrollView或者TabNavigator这种可滑动的组建，swiper都无法正确显示，解决办法是设置setTimeout。</p>
+<p>　　这里贴上<a href="http://blog.csdn.net/qq_31280709/article/details/73441330" target="_blank" rel="external">原文链接</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">export defalt class XXX from Component&#123;</div><div class="line">  state: &#123;</div><div class="line">  swiperShow: false;</div><div class="line">&#125;</div><div class="line"></div><div class="line">  componentDidMount()&#123;</div><div class="line">    setTimeout(()=&gt;&#123;</div><div class="line">      this.setState(&#123;</div><div class="line">        swiperShow:true</div><div class="line">      &#125;);</div><div class="line">    &#125;,0)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  render()&#123;</div><div class="line">    if(state.swiperShow)&#123;</div><div class="line">      return(</div><div class="line">      	.....</div><div class="line">      	// 返回轮播</div><div class="line">      )</div><div class="line">    &#125;else&#123;</div><div class="line">      return(</div><div class="line">      	&lt;View&gt;</div><div class="line">      	  &lt;Image /&gt;</div><div class="line">      	  // 仅返回一张图片</div><div class="line">      	&lt;/View&gt;</div><div class="line">      )</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>　　原理很清楚，在<code>render</code>的时候判断<code>swiperShow</code>，先不加载轮播，等<code>setTimeout</code>执行后改变了状态，轮播才被渲染，即可正常显示。</p>
+<h3 id="关于快速点击多次导致开启多个重复页面"><a href="#关于快速点击多次导致开启多个重复页面" class="headerlink" title="关于快速点击多次导致开启多个重复页面"></a>关于快速点击多次导致开启多个重复页面</h3><p>　　有一个不好的体验是，当我们快速点击一个跳转按钮多次时，会打开多个重复界面，这就很蛋疼。其实<a href="https://github.com/react-community/react-navigation/pull/1348/files" target="_blank" rel="external">官方文档</a>中也有说明，找到项目文件夹下的<code>node_modules/react-navigation/src/addNavigationHelpers.js</code>文件，替换如下内容到<code>export default</code>块中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">export default function&lt;S: *&gt;(navigation: NavigationProp&lt;S, NavigationAction&gt;) &#123;  </div><div class="line">  // 添加点击判断  </div><div class="line">  let debounce = true;  </div><div class="line">  return &#123;  </div><div class="line">    ...navigation,  </div><div class="line">    goBack: (key?: ?string): boolean =&gt;  </div><div class="line">      navigation.dispatch(  </div><div class="line">        NavigationActions.back(&#123;  </div><div class="line">          key: key === undefined ? navigation.state.key : key,  </div><div class="line">        &#125;),  </div><div class="line">      ),  </div><div class="line">      navigate: (</div><div class="line">        routeName: string,  </div><div class="line">        params?: NavigationParams,  </div><div class="line">        action?: NavigationAction,): boolean =&gt; &#123;  </div><div class="line">          if (debounce) &#123;  </div><div class="line">            debounce = false;  </div><div class="line">            navigation.dispatch(  </div><div class="line">              NavigationActions.navigate(&#123;  </div><div class="line">                routeName,  </div><div class="line">                params,  </div><div class="line">                action,  </div><div class="line">              &#125;),  </div><div class="line">            );  </div><div class="line">            setTimeout(  </div><div class="line">              () =&gt; &#123;  </div><div class="line">                debounce = true;  </div><div class="line">              &#125;,  </div><div class="line">              500,  </div><div class="line">            );  </div><div class="line">            return true;  </div><div class="line">          &#125;  </div><div class="line">          return false;  </div><div class="line">        &#125;,  </div><div class="line">    /** </div><div class="line">     * For updating current route params. For example the nav bar title and </div><div class="line">     * buttons are based on the route params. </div><div class="line">     * This means `setParams` can be used to update nav bar for example. </div><div class="line">     */  </div><div class="line">    setParams: (params: NavigationParams): boolean =&gt;  </div><div class="line">      navigation.dispatch(  </div><div class="line">        NavigationActions.setParams(&#123;  </div><div class="line">          params,  </div><div class="line">          key: navigation.state.key,  </div><div class="line">        &#125;),  </div><div class="line">      ),  </div><div class="line">  &#125;;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>　　原理也比较简单，设置一个状态<code>debounce</code>，初值为<code>true</code>，每次跳转前判断<code>debounce</code>，若为<code>true</code>则可跳转。在跳转时将<code>debounce</code>的值改为<code>false</code>，实现快速点击不会重复跳转。最后用<code>setTimeout</code>函数，在一段时间后将<code>debounce</code>再改为<code>true</code>，又可跳转。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/07/11/React-Navigation 使用方法/">React-Navigation 使用方法</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">L丶Ronin</a></p>
+        <p><span>发布时间:</span>2017-07-11, 22:37:23</p>
+        <p><span>最后更新:</span>2017-08-02, 14:25:06</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/07/11/React-Navigation 使用方法/" title="React-Navigation 使用方法">http://hzmyj.github.io/2017/07/11/React-Navigation 使用方法/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://hzmyj.github.io/2017/07/11/React-Navigation 使用方法/　　作者: L丶Ronin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/07/25/可拖动交换的Item/">
+                    RN 可拖拽交换的Item
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/07/10/React-Native笔记/">
+                    React Native 笔记
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#react-navigation是什么"><span class="toc-number">2.</span> <span class="toc-text">react-navigation是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#react-navigation基本使用"><span class="toc-number">3.</span> <span class="toc-text">react-navigation基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#StackNavigator基本用法-amp-amp-属性介绍"><span class="toc-number">3.1.</span> <span class="toc-text">StackNavigator基本用法 && 属性介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导航配置"><span class="toc-number">3.1.1.</span> <span class="toc-text">导航配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导航视觉效果"><span class="toc-number">3.1.2.</span> <span class="toc-text">导航视觉效果</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TabNavigator-基本用法-amp-amp-属性介绍"><span class="toc-number">3.2.</span> <span class="toc-text">TabNavigator 基本用法 && 属性介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导航配置-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">导航配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标签栏配置"><span class="toc-number">3.2.2.</span> <span class="toc-text">标签栏配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#另一种配置方式"><span class="toc-number">3.2.3.</span> <span class="toc-text">另一种配置方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#跳转"><span class="toc-number">3.3.</span> <span class="toc-text">跳转</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#坑"><span class="toc-number">4.</span> <span class="toc-text">坑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#react-navigation和react-native-swpier无法共用"><span class="toc-number">4.1.</span> <span class="toc-text">react-navigation和react-native-swpier无法共用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于快速点击多次导致开启多个重复页面"><span class="toc-number">4.2.</span> <span class="toc-text">关于快速点击多次导致开启多个重复页面</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2017/07/11/React-Navigation 使用方法/" data-title="React-Navigation 使用方法" data-url="http://hzmyj.github.io/2017/07/11/React-Navigation 使用方法/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"hzmyj"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//hzmyj.github.io/js/embed.js';
+
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/07/25/可拖动交换的Item/" title="上一篇: RN 可拖拽交换的Item">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/07/10/React-Native笔记/" title="下一篇: React Native 笔记">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/可拖动交换的Item/">RN 可拖拽交换的Item</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/11/React-Navigation 使用方法/">React-Navigation 使用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/10/React-Native笔记/">React Native 笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/Python-爬虫/">Python-爬虫-获取教务处成绩</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/31/baiduyun-nolimit/">解决网页版百度云大文件下载限制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/29/hexo博客搭建/">Hexo 博客搭建</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 L丶Ronin
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂)" + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*)" + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?afe0c759e34ef5d91f3fe57d166d7de6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  </div>
+</body>
+</html>
