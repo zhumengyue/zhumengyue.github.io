@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://zhumengyue.github.io/2017/01/29/hexo博客搭建/index.html">
 <meta property="og:site_name" content="Lonely Ronin's Blog">
 <meta property="og:description" content="本文旨在记录搭建Hexo博客的过程，希望对到访本页的友人一点帮助。">
-<meta property="og:updated_time" content="2018-01-22T14:21:12.491Z">
+<meta property="og:updated_time" content="2018-01-22T14:27:28.592Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 博客搭建">
 <meta name="twitter:description" content="本文旨在记录搭建Hexo博客的过程，希望对到访本页的友人一点帮助。">
@@ -327,24 +327,90 @@
       
           
         <p>　　本文旨在记录搭建Hexo博客的过程，希望对到访本页的友人一点帮助。<br><a id="more"></a><br>　　博主的博客由于一些原因前后重新搭建了四次，也遇到过不少障碍，有时候这次记得的步骤下次就忘记了，特写一篇较为详尽的博客来记录，以便回访。</p>
-<h2 id="一、前期准备"><a href="#一、前期准备" class="headerlink" title="一、前期准备"></a>一、前期准备</h2><ul>
+<h1 id="一、前期准备"><a href="#一、前期准备" class="headerlink" title="一、前期准备"></a>一、前期准备</h1><ul>
 <li>注册Github账号</li>
 <li>安装Git for Windows和Node.js （在官网安装即可，其中git可能需要翻墙）</li>
 </ul>
-<h3 id="Git-for-windows部署"><a href="#Git-for-windows部署" class="headerlink" title="Git for windows部署"></a>Git for windows部署</h3><p>首先将之前注册的github账号和邮箱初始化给电脑<br>桌面右键运行git bash，依次输入如下指令</p>
+<h2 id="Git-for-windows部署"><a href="#Git-for-windows部署" class="headerlink" title="Git for windows部署"></a>Git for windows部署</h2><p>首先将之前注册的github账号和邮箱初始化给电脑<br>桌面右键运行git bash，依次输入如下指令</p>
 <blockquote>
 <p>git config –global user.name “yourname”<br>git config –global user.email “youremail”</p>
 </blockquote>
-<h2 id="二、SSH-key的相关设置"><a href="#二、SSH-key的相关设置" class="headerlink" title="二、SSH key的相关设置"></a>二、SSH key的相关设置</h2><h3 id="Windows下配置SSH并连接到github、github配置SSH-Key"><a href="#Windows下配置SSH并连接到github、github配置SSH-Key" class="headerlink" title="Windows下配置SSH并连接到github、github配置SSH Key"></a>Windows下配置SSH并连接到github、github配置SSH Key</h3><ul>
-<li><p>检查本机是否有SSH Key设置<br>输入命令<figure class="highlight plain"><figcaption><span>~/.ssh```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">1. 若没有，则提示： No such file or director  继续后面步骤</div><div class="line">2. 若有，则进入 ~/.ssh路径，```rm *```删除所有文件</div><div class="line"></div><div class="line">#### 使用Git Bash生成新的ssh key</div><div class="line"></div><div class="line">1. ```cd ~``` 保证当前路径在&quot;~&quot;下</div><div class="line"></div><div class="line"></div><div class="line">2. ```ssh-keygen -t rsa -C &quot;xxxx@yy.com&quot;```填写真实的邮箱地址，建议选择注册github时的邮箱</div><div class="line"></div><div class="line">#### 添加ssh key到github</div><div class="line">1. 登录github，点击&quot;▽&quot; —— settings —— ssh keys —— add ssh key</div><div class="line">2. 复制id_rsa.pub(用TXT打开，全选)的公钥，添加到相应位置</div><div class="line">3. 测试ssh keys是否配置成功,输入指令</div><div class="line">&gt; ssh -T git@github.com</div><div class="line"></div><div class="line">　　**若出现 &quot;Hi xxx! You&apos;ve successfully authenticated, but GitHub does not provide shell access&quot;，则设置成功**</div><div class="line"></div><div class="line">## 三、远程连接</div><div class="line"></div><div class="line">### 将本地项目通过SSH push到github</div><div class="line"></div><div class="line">1. 创建目录 </div><div class="line">&gt; mkdir test</div><div class="line">&gt; cd test</div><div class="line">2. 初始化</div><div class="line">&gt; git init </div><div class="line">3. 创建 hello.md文件</div><div class="line">&gt; echo &quot;这是一次测试test ssh key&quot; &gt; hello.md</div><div class="line">4. 提交到本地</div><div class="line">&gt; git add .</div><div class="line">&gt; git commit -m &quot;add hello.md&quot;   #提交记录说明 </div><div class="line">5. 提交到github</div><div class="line">&gt; git remote add origin ‘粘贴复制test ssh key的ssh路径’  #</div><div class="line">&gt; git push -u origin master</div><div class="line"></div><div class="line">### Hexo部署</div><div class="line"></div><div class="line"> 　　首先在GitHub上创建一个项目，项目名为**username.github.io**，其中**username**为GitHub的账号名称。</div><div class="line"></div><div class="line">* 执行命令</div><div class="line">&gt; npm install hexo -g       #全局安装hexo</div><div class="line"></div><div class="line">　　第一次执行这个操作时，卡在安装过程。后卸载现有node.js并在[官网](https://www.baidu.com/link?url=AqumB_lIyL0_EkHfKb3fmmaUM_RLVYkTGcN7Uz_O_7y&amp;wd=&amp;eqid=b724fee7000b232d0000000557f3401f)下载最新版本，安装后依然无用。后来在寝室完成安装hexo。推测和下载网速有关。</div><div class="line"></div><div class="line">* 在合适的位置新建博客目录并转移到目录下</div><div class="line">&gt; mkdir hexo-blog</div><div class="line">&gt; cd hexo-blog</div><div class="line">* 初始化hexo</div><div class="line">&gt; hexo init</div><div class="line">* 启动</div><div class="line">&gt; hexo server</div><div class="line"></div><div class="line">在浏览器中访问localhost:4000，若成则说明hexo配置成功(若按下ctrl+c则停止访问)</div><div class="line">* 将本地hexo与远程github关联</div><div class="line"></div><div class="line">* 修改项目根目录下的配置文件 `_config.yml`，用文本编辑器打开，修改最下面 `deployer `属性为</div><div class="line"></div><div class="line">  ```handlebars</div><div class="line">  deploy:</div><div class="line">    type: git</div><div class="line">    repository: git@github.com:username/username.github.io.git</div><div class="line">    branch: master</div></pre></td></tr></table></figure></p>
-<p>注意 <code>type</code> 、<code>repository</code>、<code>branch</code> 后的 <code>:</code> 为英文输入，且冒号后面有空格。</p>
-</li>
-<li><p>安装hexo-deployer-git</p>
-<blockquote>
-<p><code>npm install hexo-deployer-git -S</code></p>
+<h1 id="二、SSH-key的相关设置"><a href="#二、SSH-key的相关设置" class="headerlink" title="二、SSH key的相关设置"></a>二、SSH key的相关设置</h1><h2 id="Windows下配置SSH并连接到github、github配置SSH-Key"><a href="#Windows下配置SSH并连接到github、github配置SSH-Key" class="headerlink" title="Windows下配置SSH并连接到github、github配置SSH Key"></a>Windows下配置SSH并连接到github、github配置SSH Key</h2><ul>
+<li>检查本机是否有SSH Key设置<br>输入命令 <code>cd ~/.ssh</code></li>
+</ul>
+<ol>
+<li>若没有，则提示： No such file or director  继续后面步骤</li>
+<li>若有，则进入 ~/.ssh路径，<code>rm *</code> 删除所有文件</li>
+</ol>
+<h3 id="使用Git-Bash生成新的ssh-key"><a href="#使用Git-Bash生成新的ssh-key" class="headerlink" title="使用Git Bash生成新的ssh key"></a>使用Git Bash生成新的ssh key</h3><ol>
+<li><code>cd ~</code> 保证当前路径在”~”下</li>
+<li><code>ssh-keygen -t rsa -C &quot;xxxx@yy.com&quot;</code> 填写真实的邮箱地址，建议选择注册github时的邮箱</li>
+</ol>
+<h3 id="添加ssh-key到github"><a href="#添加ssh-key到github" class="headerlink" title="添加ssh key到github"></a>添加ssh key到github</h3><ol>
+<li>登录github，点击”▽” —— settings —— ssh keys —— add ssh key</li>
+<li>复制id_rsa.pub(用TXT打开，全选)的公钥，添加到相应位置</li>
+<li>测试ssh keys是否配置成功,输入指令<blockquote>
+<p>ssh -T git@github.com</p>
 </blockquote>
 </li>
-<li>执行<code>hexo g</code>生成静态网页</li>
+</ol>
+<p>　　<strong>若出现 “Hi xxx! You’ve successfully authenticated, but GitHub does not provide shell access”，则设置成功</strong></p>
+<h1 id="三、远程连接"><a href="#三、远程连接" class="headerlink" title="三、远程连接"></a>三、远程连接</h1><h2 id="将本地项目通过SSH-push到github"><a href="#将本地项目通过SSH-push到github" class="headerlink" title="将本地项目通过SSH push到github"></a>将本地项目通过SSH push到github</h2><ol>
+<li>创建目录 <blockquote>
+<p>mkdir test<br>cd test</p>
+</blockquote>
+</li>
+<li>初始化<blockquote>
+<p>git init </p>
+</blockquote>
+</li>
+<li>创建 hello.md文件<blockquote>
+<p>echo “这是一次测试test ssh key” &gt; hello.md</p>
+</blockquote>
+</li>
+<li>提交到本地<blockquote>
+<p>git add .<br>git commit -m “add hello.md”   #提交记录说明 </p>
+</blockquote>
+</li>
+<li>提交到github<blockquote>
+<p>git remote add origin ‘粘贴复制test ssh key的ssh路径’  #<br>git push -u origin master</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="Hexo部署"><a href="#Hexo部署" class="headerlink" title="Hexo部署"></a>Hexo部署</h2><p> 　　首先在GitHub上创建一个项目，项目名为<strong>username.github.io</strong>，其中<strong>username</strong>为GitHub的账号名称。</p>
+<ul>
+<li>执行命令<blockquote>
+<p>npm install hexo -g       #全局安装hexo</p>
+</blockquote>
+</li>
+</ul>
+<p>　　第一次执行这个操作时，卡在安装过程。后卸载现有node.js并在<a href="https://www.baidu.com/link?url=AqumB_lIyL0_EkHfKb3fmmaUM_RLVYkTGcN7Uz_O_7y&amp;wd=&amp;eqid=b724fee7000b232d0000000557f3401f" target="_blank" rel="external">官网</a>下载最新版本，安装后依然无用。后来在寝室完成安装hexo。推测和下载网速有关。</p>
+<ul>
+<li>在合适的位置新建博客目录并转移到目录下<blockquote>
+<p>mkdir hexo-blog<br>cd hexo-blog</p>
+</blockquote>
+</li>
+<li>初始化hexo<blockquote>
+<p>hexo init</p>
+</blockquote>
+</li>
+<li>启动<blockquote>
+<p>hexo server</p>
+</blockquote>
+</li>
+</ul>
+<p>在浏览器中访问localhost:4000，若成则说明hexo配置成功(若按下ctrl+c则停止访问)</p>
+<ul>
+<li><p>将本地hexo与远程github关联</p>
+</li>
+<li><p>修改项目根目录下的配置文件 <code>_config.yml</code>，用文本编辑器打开，修改最下面 <code>deployer</code> 属性为</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repository: git@github.com:username/username.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+<p>注意 <code>type</code> 、<code>repository</code>、<code>branch</code> 后的 <code>:</code> 为英文输入，且冒号后面有空格。</p>
+</li>
+<li><p>安装hexo-deployer-git<br><code>npm install hexo-deployer-git -S</code></p>
+</li>
+<li><p>执行<code>hexo g</code>生成静态网页</p>
+</li>
 <li>执行<code>hexo d</code>部署到远程github</li>
 </ul>
 <p>　　至此可以直接通过<strong><a href="https://username.github.io" target="_blank" rel="external">https://username.github.io</a></strong>访问博客，目的达到！  </p>
@@ -360,7 +426,7 @@
         <p><span>本文标题:</span><a href="/2017/01/29/hexo博客搭建/">Hexo 博客搭建</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">L丶Ronin</a></p>
         <p><span>发布时间:</span>2017-01-29, 17:08:55</p>
-        <p><span>最后更新:</span>2018-01-22, 22:21:12</p>
+        <p><span>最后更新:</span>2018-01-22, 22:27:28</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/01/29/hexo博客搭建/" title="Hexo 博客搭建">http://zhumengyue.github.io/2017/01/29/hexo博客搭建/</a>
             <span class="copy-path" data-clipboard-text="原文: http://zhumengyue.github.io/2017/01/29/hexo博客搭建/　　作者: L丶Ronin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -390,7 +456,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、前期准备"><span class="toc-number">1.</span> <span class="toc-text">一、前期准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Git-for-windows部署"><span class="toc-number">1.1.</span> <span class="toc-text">Git for windows部署</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、SSH-key的相关设置"><span class="toc-number">2.</span> <span class="toc-text">二、SSH key的相关设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows下配置SSH并连接到github、github配置SSH-Key"><span class="toc-number">2.1.</span> <span class="toc-text">Windows下配置SSH并连接到github、github配置SSH Key</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、前期准备"><span class="toc-number">1.</span> <span class="toc-text">一、前期准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-for-windows部署"><span class="toc-number">1.1.</span> <span class="toc-text">Git for windows部署</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、SSH-key的相关设置"><span class="toc-number">2.</span> <span class="toc-text">二、SSH key的相关设置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows下配置SSH并连接到github、github配置SSH-Key"><span class="toc-number">2.1.</span> <span class="toc-text">Windows下配置SSH并连接到github、github配置SSH Key</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Git-Bash生成新的ssh-key"><span class="toc-number">2.1.1.</span> <span class="toc-text">使用Git Bash生成新的ssh key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加ssh-key到github"><span class="toc-number">2.1.2.</span> <span class="toc-text">添加ssh key到github</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、远程连接"><span class="toc-number">3.</span> <span class="toc-text">三、远程连接</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#将本地项目通过SSH-push到github"><span class="toc-number">3.1.</span> <span class="toc-text">将本地项目通过SSH push到github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hexo部署"><span class="toc-number">3.2.</span> <span class="toc-text">Hexo部署</span></a></li></ol></li></ol>
         
     </div>
     <style>
