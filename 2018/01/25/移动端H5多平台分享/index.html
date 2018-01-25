@@ -15,13 +15,19 @@
 
 
 
+<meta name="description" content="文章基本转自团队大佬的总结：移动端H5多平台分享实践 。
+　　团队在圣诞和元旦策划了两个活动，我有幸参与到这两个活动的策划与实现，其都涉及到了在多平台下的分享，如何按照产品要求实现多平台下一致的分享效果，包括分享文案的动态生成，在没有Native的帮助下是比较困难的。我们研究了很多分享方案，得到了一套较为完整的分享方案。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="移动端H5多平台分享">
 <meta property="og:url" content="http://zhumengyue.github.io/2018/01/25/移动端H5多平台分享/index.html">
 <meta property="og:site_name" content="Lonely Ronin's Blog">
-<meta property="og:updated_time" content="2018-01-25T13:36:50.146Z">
+<meta property="og:description" content="文章基本转自团队大佬的总结：移动端H5多平台分享实践 。
+　　团队在圣诞和元旦策划了两个活动，我有幸参与到这两个活动的策划与实现，其都涉及到了在多平台下的分享，如何按照产品要求实现多平台下一致的分享效果，包括分享文案的动态生成，在没有Native的帮助下是比较困难的。我们研究了很多分享方案，得到了一套较为完整的分享方案。">
+<meta property="og:updated_time" content="2018-01-25T16:15:44.717Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="移动端H5多平台分享">
+<meta name="twitter:description" content="文章基本转自团队大佬的总结：移动端H5多平台分享实践 。
+　　团队在圣诞和元旦策划了两个活动，我有幸参与到这两个活动的策划与实现，其都涉及到了在多平台下的分享，如何按照产品要求实现多平台下一致的分享效果，包括分享文案的动态生成，在没有Native的帮助下是比较困难的。我们研究了很多分享方案，得到了一套较为完整的分享方案。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -323,7 +329,21 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        
+        <p>　　文章基本转自团队大佬的总结：<a href="https://www.jianshu.com/p/dc96566001da?utm_campaign=hugo&amp;utm_medium=reader_share&amp;utm_content=note&amp;utm_source=qq" target="_blank" rel="external">移动端H5多平台分享实践</a> 。</p>
+<p>　　团队在圣诞和元旦策划了两个活动，我有幸参与到这两个活动的策划与实现，其都涉及到了在多平台下的分享，如何按照产品要求实现多平台下一致的分享效果，包括分享文案的动态生成，在没有Native的帮助下是比较困难的。我们研究了很多分享方案，得到了一套较为完整的分享方案。</p>
+<a id="more"></a>
+<h1 id="微信的分享"><a href="#微信的分享" class="headerlink" title="微信的分享"></a>微信的分享</h1><p>微信下的分享通过调用微信提供的 <code>JS-SDK</code>和引导用户<strong>点击右上角</strong>完成。</p>
+<p>使用微信的<code>JS-SDK</code>需要引入如下js文件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=<span class="string">"//res.wx.qq.com/open/js/jweixin-1.3.1.js"</span>&gt;&lt;/script&gt;</div></pre></td></tr></table></figure>
+<h1 id="QQ-TIM-的分享"><a href="#QQ-TIM-的分享" class="headerlink" title="QQ / TIM 的分享"></a>QQ / TIM 的分享</h1><h2 id="通过-JS-API-分享"><a href="#通过-JS-API-分享" class="headerlink" title="通过 JS API 分享"></a>通过 JS API 分享</h2><p>QQ（以下无特殊说明TIM下同样有效）下也有设置分享内容的API，同样需要先引用 <code>JSBridge</code> 相关的文件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=<span class="string">"//open.mobile.qq.com/sdk/qqapi.js"</span>&gt;&lt;/script&gt;</div></pre></td></tr></table></figure>
+<p>设置分享内容的代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> share = &#123;</div><div class="line">    <span class="attr">title</span>: <span class="string">'分享标题，最大45字节'</span>,<span class="comment">// 默认当前页面标题</span></div><div class="line">    desc: <span class="string">'分享内容，最大60字节'</span>, <span class="comment">// 默认当前页面地址</span></div><div class="line">    image_url: <span class="string">'图片URL'</span>,	<span class="comment">// 默认无</span></div><div class="line">    share_url: <span class="string">'分享链接'</span>	<span class="comment">// 必须是当前页面 url，默认也是</span></div><div class="line">&#125;;</div><div class="line">mqq.data.setShareInfo(share, callback);</div></pre></td></tr></table></figure>
+<p><strong>需要注意的是</strong>：分享链接长度不能超过120字节，并且必须跟页面URL同一个域名，否则设置不生效；分享的图片最小需要200 * 200，否则分享到QQ空间时会被过滤掉。<br>设置完分享内容后，可通过API调用唤起QQ的分享面板，免去引导的过程。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mqq.ui.showShareMenu(); <span class="comment">// 唤起QQ原生分享面板</span></div></pre></td></tr></table></figure>
+<iframe height="500" width="500" src="http://ww4.sinaimg.cn/mw690/e75a115bgw1f3rrbzv1m8g209v0diqv7.gif">
+
+</iframe>
       
     </div>
     
@@ -334,7 +354,7 @@
         <p><span>本文标题:</span><a href="/2018/01/25/移动端H5多平台分享/">移动端H5多平台分享</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">L丶Ronin</a></p>
         <p><span>发布时间:</span>2018-01-25, 21:34:38</p>
-        <p><span>最后更新:</span>2018-01-25, 21:36:50</p>
+        <p><span>最后更新:</span>2018-01-26, 00:15:44</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/01/25/移动端H5多平台分享/" title="移动端H5多平台分享">http://zhumengyue.github.io/2018/01/25/移动端H5多平台分享/</a>
             <span class="copy-path" data-clipboard-text="原文: http://zhumengyue.github.io/2018/01/25/移动端H5多平台分享/　　作者: L丶Ronin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -364,7 +384,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#微信的分享"><span class="toc-number">1.</span> <span class="toc-text">微信的分享</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#QQ-TIM-的分享"><span class="toc-number">2.</span> <span class="toc-text">QQ / TIM 的分享</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#通过-JS-API-分享"><span class="toc-number">2.1.</span> <span class="toc-text">通过 JS API 分享</span></a></li></ol></li></ol>
         
     </div>
     <style>
