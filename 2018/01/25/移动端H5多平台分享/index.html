@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Lonely Ronin's Blog">
 <meta property="og:description" content="文章基本转自团队大佬的总结：移动端H5多平台分享实践 。
 　　团队在圣诞和元旦策划了两个活动，我有幸参与到这两个活动的策划与实现，其都涉及到了在多平台下的分享，如何按照产品要求实现多平台下一致的分享效果，包括分享文案的动态生成，在没有Native的帮助下是比较困难的。我们研究了很多分享方案，得到了一套较为完整的分享方案。">
-<meta property="og:updated_time" content="2018-01-25T16:15:44.717Z">
+<meta property="og:updated_time" content="2018-01-25T17:46:22.536Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="移动端H5多平台分享">
 <meta name="twitter:description" content="文章基本转自团队大佬的总结：移动端H5多平台分享实践 。
@@ -339,11 +339,46 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=<span class="string">"//open.mobile.qq.com/sdk/qqapi.js"</span>&gt;&lt;/script&gt;</div></pre></td></tr></table></figure>
 <p>设置分享内容的代码如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> share = &#123;</div><div class="line">    <span class="attr">title</span>: <span class="string">'分享标题，最大45字节'</span>,<span class="comment">// 默认当前页面标题</span></div><div class="line">    desc: <span class="string">'分享内容，最大60字节'</span>, <span class="comment">// 默认当前页面地址</span></div><div class="line">    image_url: <span class="string">'图片URL'</span>,	<span class="comment">// 默认无</span></div><div class="line">    share_url: <span class="string">'分享链接'</span>	<span class="comment">// 必须是当前页面 url，默认也是</span></div><div class="line">&#125;;</div><div class="line">mqq.data.setShareInfo(share, callback);</div></pre></td></tr></table></figure>
-<p><strong>需要注意的是</strong>：分享链接长度不能超过120字节，并且必须跟页面URL同一个域名，否则设置不生效；分享的图片最小需要200 * 200，否则分享到QQ空间时会被过滤掉。<br>设置完分享内容后，可通过API调用唤起QQ的分享面板，免去引导的过程。</p>
+<p>&emsp;&emsp;<strong>需要注意的是</strong>：分享链接长度不能超过120字节，并且必须跟页面URL同一个域名，否则设置不生效；分享的图片最小需要200 * 200，否则分享到QQ空间时会被过滤掉。<br>设置完分享内容后，可通过API调用唤起QQ的分享面板，免去引导的过程。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mqq.ui.showShareMenu(); <span class="comment">// 唤起QQ原生分享面板</span></div></pre></td></tr></table></figure>
-<iframe height="500" width="500" src="http://ww4.sinaimg.cn/mw690/e75a115bgw1f3rrbzv1m8g209v0diqv7.gif">
+<p>还有一种方法，通过 <code>setOnShareHandler</code> 设置web页面分享的监听事件。当用户点击右上角的弹出菜单后，点击了分享时会通知页面，此时需要调用 <code>shareMessage</code> 主动发起分享（系统默认的分享行为不再执行）代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">mqq.ui.setOnShareHandler(<span class="function"><span class="keyword">function</span> (<span class="params">platform</span>) </span>&#123;</div><div class="line">    mqq.ui.shareMessage(&#123;</div><div class="line">        <span class="attr">title</span>: <span class="string">'分享标题'</span>,</div><div class="line">        <span class="attr">desc</span>: <span class="string">'分享内容'</span>,</div><div class="line">        <span class="attr">share_type</span>: platform,</div><div class="line">        <span class="attr">share_url</span>: <span class="string">'分享链接'</span>,</div><div class="line">        <span class="attr">image_url</span>: <span class="string">'图片URL'</span>,</div><div class="line">        <span class="attr">sourceName</span>: <span class="string">'掌上理工大'</span>,</div><div class="line">        <span class="attr">back</span>: <span class="literal">true</span></div><div class="line">    &#125;, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>其中<code>platform</code>是分享平台类型，取值如下：</p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>分享平台</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>QQ好友</td>
+</tr>
+<tr>
+<td>1</td>
+<td>QQ空间</td>
+</tr>
+<tr>
+<td>2</td>
+<td>微信好友</td>
+</tr>
+<tr>
+<td>3</td>
+<td>微信朋友圈</td>
+</tr>
+</tbody>
+</table>
+<p>&emsp;&emsp;以上两种代码同时写出时，无论代码的先后顺序，分享文案会采用后面一种（<code>mqq.ui.setOnShareHandler</code>），无论是点击其他按钮唤起分享面板还是直接点击右上角native分享。（我也不知道为什么）</p>
+<h2 id="通过-meta-标签分享"><a href="#通过-meta-标签分享" class="headerlink" title="通过 meta 标签分享"></a>通过 meta 标签分享</h2><p>QQ也支持通过设置 <code>meta</code> 标签定义分享内容。通过定义 <code>itemprop</code> 可设置分享内容，同时为了更好的兼容其它平台，我们也引入了 <code>Open Graph</code> 标准。代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">itemprop</span>=<span class="string">"name"</span> <span class="attr">property</span>=<span class="string">"og:title"</span> <span class="attr">content</span>=<span class="string">"分享标题"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">property</span>=<span class="string">"og:url"</span> <span class="attr">content</span>=<span class="string">"分享链接"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">itemprop</span>=<span class="string">"image"</span> <span class="attr">property</span>=<span class="string">"og:image"</span> <span class="attr">content</span>=<span class="string">"图片URL"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"description"</span> <span class="attr">itemprop</span>=<span class="string">"description"</span> <span class="attr">property</span>=<span class="string">"og:description"</span> <span class="attr">content</span>=<span class="string">"分享描述"</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>需要注意的是</strong>，meta标签需要是服务端渲染输出，通过js生成或修改无效。</p>
+<p>分享标题应该是默认当前页面标题，在 content 中修改并没有起作用。（待验证）</p>
+<h2 id="通过URL-Scheme唤起QQ分享"><a href="#通过URL-Scheme唤起QQ分享" class="headerlink" title="通过URL Scheme唤起QQ分享"></a>通过URL Scheme唤起QQ分享</h2><p>还可以通过URL Scheme唤起QQ进行分享，该方法的好处在于可以在非QQ环境下唤起QQ实现分享，缺点在于不能设置分享图片。代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> share = &#123;</div><div class="line">    <span class="attr">title</span>: <span class="string">'url scheme 分享标题'</span>,</div><div class="line">    <span class="attr">desc</span>: <span class="string">'url scheme 分享内容'</span>,</div><div class="line">    <span class="attr">share_url</span>: <span class="string">'分享链接'</span> <span class="comment">// 不会默认，必须手动设置分享链接</span></div><div class="line">&#125;;</div><div class="line"><span class="keyword">const</span> url_scheme = <span class="string">'//share/to_fri?src_type=web&amp;version=1&amp;file_type=news&amp;share_id=1103437993&amp;title='</span> </div><div class="line">		  + Base64.encode(share.title) + <span class="string">'&amp;thirdAppDisplayName=5o6M5LiK55CG5bel5aSn&amp;url='</span> </div><div class="line">		  + Base64.encode(share.share_url) + <span class="string">'&amp;description='</span> + Base64.encode(share.desc);</div><div class="line">location.assign(<span class="string">'mqqapi:'</span> + url_scheme);</div><div class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  location.assign(<span class="string">'timapi:'</span> + url_scheme);</div><div class="line">&#125;, <span class="number">1200</span>);</div></pre></td></tr></table></figure>
+<p>其中分享的参数在拼入URL中时需要 <code>Base64</code> （需引入 base64.js 文件）编码。为了支持TIM下的分享，我们引入了延时函数，如果唤起QQ失败该定时器将会执行唤起TIM，唤起成功离开了此页面将不会执行。QQ和TIM均安装时优先唤起QQ。</p>
 
-</iframe>
       
     </div>
     
@@ -354,7 +389,7 @@
         <p><span>本文标题:</span><a href="/2018/01/25/移动端H5多平台分享/">移动端H5多平台分享</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">L丶Ronin</a></p>
         <p><span>发布时间:</span>2018-01-25, 21:34:38</p>
-        <p><span>最后更新:</span>2018-01-26, 00:15:44</p>
+        <p><span>最后更新:</span>2018-01-26, 01:46:22</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/01/25/移动端H5多平台分享/" title="移动端H5多平台分享">http://zhumengyue.github.io/2018/01/25/移动端H5多平台分享/</a>
             <span class="copy-path" data-clipboard-text="原文: http://zhumengyue.github.io/2018/01/25/移动端H5多平台分享/　　作者: L丶Ronin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -384,7 +419,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#微信的分享"><span class="toc-number">1.</span> <span class="toc-text">微信的分享</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#QQ-TIM-的分享"><span class="toc-number">2.</span> <span class="toc-text">QQ / TIM 的分享</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#通过-JS-API-分享"><span class="toc-number">2.1.</span> <span class="toc-text">通过 JS API 分享</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#微信的分享"><span class="toc-number">1.</span> <span class="toc-text">微信的分享</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#QQ-TIM-的分享"><span class="toc-number">2.</span> <span class="toc-text">QQ / TIM 的分享</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#通过-JS-API-分享"><span class="toc-number">2.1.</span> <span class="toc-text">通过 JS API 分享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通过-meta-标签分享"><span class="toc-number">2.2.</span> <span class="toc-text">通过 meta 标签分享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通过URL-Scheme唤起QQ分享"><span class="toc-number">2.3.</span> <span class="toc-text">通过URL Scheme唤起QQ分享</span></a></li></ol></li></ol>
         
     </div>
     <style>
