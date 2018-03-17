@@ -17,14 +17,16 @@
 
 <meta name="description" content="自用笔记。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript之引用类型">
+<meta property="og:title" content="JavaScript之引用类型 （Array & Date）">
 <meta property="og:url" content="http://zhumengyue.github.io/2018/03/17/JavaScript高级程序设计二/index.html">
 <meta property="og:site_name" content="Lonely Ronin's Blog">
 <meta property="og:description" content="自用笔记。">
-<meta property="og:updated_time" content="2018-03-17T13:28:08.518Z">
+<meta property="og:image" content="https://i.loli.net/2018/03/17/5aad1e0100896.png">
+<meta property="og:updated_time" content="2018-03-17T15:12:51.065Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JavaScript之引用类型">
+<meta name="twitter:title" content="JavaScript之引用类型 （Array & Date）">
 <meta name="twitter:description" content="自用笔记。">
+<meta name="twitter:image" content="https://i.loli.net/2018/03/17/5aad1e0100896.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -56,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>JavaScript之引用类型 | Lonely Ronin&#39;s Blog</title>
+<title>JavaScript之引用类型 （Array &amp; Date） | Lonely Ronin&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -301,7 +303,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      JavaScript之引用类型
+      JavaScript之引用类型 （Array &amp; Date）
     </h1>
   
 
@@ -328,6 +330,78 @@
           
         <p>自用笔记。</p>
 <a id="more"></a>
+<h2 id="Array-相关方法"><a href="#Array-相关方法" class="headerlink" title="Array 相关方法"></a>Array 相关方法</h2><h3 id="栈-队列方法"><a href="#栈-队列方法" class="headerlink" title="栈 / 队列方法"></a>栈 / 队列方法</h3><figure class="highlight plain"><figcaption><span>: 接收任意数量参数，逐一添加到数组末尾，**返回修改后数组长度**</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">```pop()``` : 从数组末尾移除一项，减少数组 `length` 值，**返回移除的项**</div><div class="line"></div><div class="line">`shift()` : 移除数组中第一个项，**并返回该项**</div><div class="line"></div><div class="line">`unshitf()` : 在数组开头添加任意个项，**返回修改后数组长度**</div><div class="line"></div><div class="line">![1.png](https://i.loli.net/2018/03/17/5aacbad1562f9.png)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">### 重排序方法</div><div class="line"></div><div class="line">`reverse()` : 反转数组项顺序</div><div class="line"></div><div class="line">`sort()` : 默认情况下按**升序**（最小值位于前面），**会调用每个数组项的 `toString()` 方法**</div><div class="line"></div><div class="line">![2.png](https://i.loli.net/2018/03/17/5aacbc693358f.png)</div><div class="line"></div><div class="line">显然，这种 `sort()` 方案在多数情况下都不是最佳方案，因此 `sort()` 方法可以接收一个**比较函数**作为参数，以便指定哪个值位于哪个值前面</div><div class="line"></div><div class="line">![3.png](https://i.loli.net/2018/03/17/5aacbdfe40fed.png)</div><div class="line"></div><div class="line">### 操作方法</div><div class="line"></div><div class="line">`concat()` : 先创建当前数组的一个副本，将接收到的参数添加到副本末尾</div><div class="line"></div><div class="line">`slice()` :  基于当前数组的一个或多个项创建一个新数组，接收1~2个参数，即要返回项的起始和结束位置。**不会影响原数组**。</div><div class="line"></div><div class="line">**注意：如果只有一个参数，则返回从指定位置开始到当前数组末尾的所有项。如果有两个参数，返回起始位置和结束位置之间的项——*但不包含结束位置的项***。</div><div class="line"></div><div class="line">- 如果起始位置大于结束位置，返回空。</div><div class="line"></div><div class="line">- 如果参数中有负数，则用数组长度加上该数来确定位置</div><div class="line"></div><div class="line">  如一个包含5项的数组，调用 `slice(-2,-1)` 与调用 `slice(3,4)` 得到的结果相同</div><div class="line"></div><div class="line">```javascript</div><div class="line">var colors1 = [&quot;red&quot;, &quot;yellow&quot;, &quot;blue&quot;, &quot;black&quot;, &quot;purple&quot;];</div><div class="line">var colors2 = colors1.slice(1);	// colors2  yellow,blue,black,purple</div><div class="line">var colors3 = colors1.slice(1,4); // colors3  yellow,blue,black     ———— 不返回第四项</div><div class="line">// colors1  red,yellow,blue,black,purple</div></pre></td></tr></table></figure>
+<p><code>splice()</code> : </p>
+<ul>
+<li>删除：可以删除任意数量的项，需要两个参数：要删除的第一项的位置和要删除的项数。<code>splice(0,2)</code> 会删除前两项。</li>
+<li>插入：向指定位置插入任意数量的项，需要三个参数：起始位置、0（要删除的项数）、要插入的项</li>
+<li>替换：向指定位置插入任意数量的项，同时删除任意数量的项，需要三个参数：起始位置、需要删除的项数、要插入的项</li>
+</ul>
+<p><code>splice()</code> 始终返回一个数组，包含从原数组中删除的项。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> colors = [<span class="string">"red"</span>,<span class="string">"green"</span>,<span class="string">"blue"</span>];</div><div class="line"><span class="keyword">var</span> removed = colors.splice(<span class="number">0</span>,<span class="number">1</span>); <span class="comment">// 删除第一项</span></div><div class="line"><span class="built_in">console</span>.log(colors);  <span class="comment">// green,blue</span></div><div class="line"><span class="built_in">console</span>.log(removed); <span class="comment">// red</span></div><div class="line">removed = colors.splice(<span class="number">1</span>,<span class="number">0</span>,<span class="string">"yellow"</span>,<span class="string">"orange"</span>);</div><div class="line"><span class="built_in">console</span>.log(colors);  <span class="comment">// green,yellow,orange,blue</span></div><div class="line"><span class="built_in">console</span>.log(removed); <span class="comment">// 没有删除的项，返回空</span></div><div class="line">removed = colors.splice(<span class="number">1</span>,<span class="number">1</span>,<span class="string">"red"</span>,<span class="string">"purple"</span>);</div><div class="line"><span class="built_in">console</span>.log(colors);  <span class="comment">// green,red,purple,orange,blue</span></div><div class="line"><span class="built_in">console</span>.log(removed); <span class="comment">// yellow</span></div></pre></td></tr></table></figure>
+<h2 id="Date-相关方法"><a href="#Date-相关方法" class="headerlink" title="Date 相关方法"></a>Date 相关方法</h2><h3 id="基本方法"><a href="#基本方法" class="headerlink" title="基本方法"></a>基本方法</h3><h4 id="Date"><a href="#Date" class="headerlink" title="Date()"></a>Date()</h4><p>在不传入参数的情况下，默认返回当前日期和时间。</p>
+<p>如果传入参数，必须传入表示该日期的毫秒数。为了简化这一过程，ECMAScript 提供两个方法：<code>Date.parse()</code> 、<code>Date.UTC()</code> 。</p>
+<p><img src="https://i.loli.net/2018/03/17/5aad1e0100896.png" alt="4.png"></p>
+<h4 id="Date-parse"><a href="#Date-parse" class="headerlink" title="Date.parse()"></a>Date.parse()</h4><p>接收一个表示日期的字符串参数，然后尝试根据这个字符串返回相应日期的毫秒数。</p>
+<p>如果直接将表示日期的字符串传递给 Date 构造函数，也会在后台调用 <code>Date.parse()</code> 函数，即下面两行代码等价。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> somedate = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">Date</span>.parse(<span class="string">"May 25, 2004"</span>));</div><div class="line"><span class="keyword">var</span> somedate = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">"May 25, 2004"</span>);  <span class="comment">// 两个等价</span></div></pre></td></tr></table></figure>
+<h4 id="Date-UTC"><a href="#Date-UTC" class="headerlink" title="Date.UTC()"></a>Date.UTC()</h4><p>参数分别为年份、基于0的月份（一月是0，二月是1，以此类推）、月中某一天（1~31）、小时数（0~23）、分钟、秒以及毫秒数。其中只有前两个参数是必须的。</p>
+<p>如果没提供月份中的天数，则假设为 1 。</p>
+<p>如果省略其他参数，则统统假设为 0 。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> y2k = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">Date</span>.UTC(<span class="number">2000</span>,<span class="number">0</span>));</div><div class="line"><span class="keyword">var</span> allFives = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">Date</span>.UTC(<span class="number">2005</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">17</span>,<span class="number">55</span>,<span class="number">55</span>));	<span class="comment">// 表示2005-4-5 17:55:55</span></div></pre></td></tr></table></figure>
+<h3 id="格式化方法"><a href="#格式化方法" class="headerlink" title="格式化方法"></a>格式化方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line"><span class="built_in">console</span>.log(now); <span class="comment">// Sat Mar 17 2018 22:20:46 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="built_in">console</span>.log(now.toDateString()); <span class="comment">// Sat Mar 17 2018</span></div><div class="line"><span class="built_in">console</span>.log(now.toTimeString()); <span class="comment">// 22:20:46 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="built_in">console</span>.log(now.toLocaleDateString()); <span class="comment">// 2018/3/17</span></div><div class="line"><span class="built_in">console</span>.log(now.toLocaleTimeString()); <span class="comment">// 下午10:20:46</span></div><div class="line"><span class="built_in">console</span>.log(now.toUTCString()); <span class="comment">// Sat, 17 Mar 2018 14:20:46 GMT</span></div></pre></td></tr></table></figure>
+<h3 id="组件方法"><a href="#组件方法" class="headerlink" title="组件方法"></a>组件方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>();  <span class="comment">// Sat Mar 17 2018 23:01:34 GMT+0800 (中国标准时间)</span></div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+<th>结果举例( now.xxxx() )</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getTime()</td>
+<td>返回毫秒数</td>
+<td>1521298894872</td>
+</tr>
+<tr>
+<td>getFullYear()</td>
+<td>取得4位数年份</td>
+<td>2018</td>
+</tr>
+<tr>
+<td>getMonth()</td>
+<td>返回月份（0代表一月）</td>
+<td>2</td>
+</tr>
+<tr>
+<td>getDate()</td>
+<td>返回天数</td>
+<td>17</td>
+</tr>
+<tr>
+<td>getDay()</td>
+<td>返回星期（0代表周日）</td>
+<td>6</td>
+</tr>
+<tr>
+<td>getHours()</td>
+<td>返回小时（0~23）</td>
+<td>23</td>
+</tr>
+<tr>
+<td>getMinutes()</td>
+<td>返回分钟（0~59）</td>
+<td>1</td>
+</tr>
+<tr>
+<td>getSeconds()</td>
+<td>返回秒（0~59）</td>
+<td>34</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
@@ -336,12 +410,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/03/17/JavaScript高级程序设计二/">JavaScript之引用类型</a></p>
+        <p><span>本文标题:</span><a href="/2018/03/17/JavaScript高级程序设计二/">JavaScript之引用类型 （Array &amp; Date）</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">L丶Ronin</a></p>
         <p><span>发布时间:</span>2018-03-17, 21:26:29</p>
-        <p><span>最后更新:</span>2018-03-17, 21:28:08</p>
+        <p><span>最后更新:</span>2018-03-17, 23:12:51</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/03/17/JavaScript高级程序设计二/" title="JavaScript之引用类型">http://zhumengyue.github.io/2018/03/17/JavaScript高级程序设计二/</a>
+            <span>原始链接:</span><a class="post-url" href="/2018/03/17/JavaScript高级程序设计二/" title="JavaScript之引用类型 （Array &amp; Date）">http://zhumengyue.github.io/2018/03/17/JavaScript高级程序设计二/</a>
             <span class="copy-path" data-clipboard-text="原文: http://zhumengyue.github.io/2018/03/17/JavaScript高级程序设计二/　　作者: L丶Ronin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -369,7 +443,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Array-相关方法"><span class="toc-number">1.</span> <span class="toc-text">Array 相关方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#栈-队列方法"><span class="toc-number">1.1.</span> <span class="toc-text">栈 / 队列方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Date-相关方法"><span class="toc-number">2.</span> <span class="toc-text">Date 相关方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本方法"><span class="toc-number">2.1.</span> <span class="toc-text">基本方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Date"><span class="toc-number">2.1.1.</span> <span class="toc-text">Date()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Date-parse"><span class="toc-number">2.1.2.</span> <span class="toc-text">Date.parse()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Date-UTC"><span class="toc-number">2.1.3.</span> <span class="toc-text">Date.UTC()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#格式化方法"><span class="toc-number">2.2.</span> <span class="toc-text">格式化方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组件方法"><span class="toc-number">2.3.</span> <span class="toc-text">组件方法</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -447,7 +521,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/03/17/JavaScript高级程序设计二/">JavaScript之引用类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/25/移动端H5多平台分享/">移动端H5多平台分享</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/JavaScript高级程序设计学习笔记一/">《JavaScript高级程序设计》学习笔记（一）—— 基本概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/可拖动交换的Item/">RN 可拖拽交换的Item</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/11/React-Navigation 使用方法/">React-Navigation 使用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/10/React-Native笔记/">React Native 笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/Python-爬虫/">Python-爬虫-获取教务处成绩</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/31/baiduyun-nolimit/">解决网页版百度云大文件下载限制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/29/hexo博客搭建/">Hexo 博客搭建</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/03/17/JavaScript高级程序设计二/">JavaScript之引用类型 （Array & Date）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/25/移动端H5多平台分享/">移动端H5多平台分享</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/JavaScript高级程序设计学习笔记一/">JavaScript之基本概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/可拖动交换的Item/">RN 可拖拽交换的Item</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/11/React-Navigation 使用方法/">React-Navigation 使用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/10/React-Native笔记/">React Native 笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/Python-爬虫/">Python-爬虫-获取教务处成绩</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/31/baiduyun-nolimit/">解决网页版百度云大文件下载限制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/29/hexo博客搭建/">Hexo 博客搭建</a></li></ul>
 
 
 
