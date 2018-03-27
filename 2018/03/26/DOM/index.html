@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="L丶Ronin" />
+
+
+
+<meta name="description" content="DOM1级Node 类型节点关系简单来说，就是父与子的关系。
+每个节点都有一个 childNodes 属性，其中保存着一个 NodeList 对象。NodeList 是一个类数组对象，可通过方括号语法访问 NodeList 的值，NodeList 对象也有 length 属性。但它不是 Array 的实例。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DOM">
+<meta property="og:url" content="http://zhumengyue.github.io/2018/03/26/DOM/index.html">
+<meta property="og:site_name" content="Lonely Ronin's Blog">
+<meta property="og:description" content="DOM1级Node 类型节点关系简单来说，就是父与子的关系。
+每个节点都有一个 childNodes 属性，其中保存着一个 NodeList 对象。NodeList 是一个类数组对象，可通过方括号语法访问 NodeList 的值，NodeList 对象也有 length 属性。但它不是 Array 的实例。">
+<meta property="og:image" content="https://i.loli.net/2018/03/27/5aba17be64edc.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/27/5aba17e253c93.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/27/5aba1cb72bcee.png">
+<meta property="og:updated_time" content="2018-03-27T10:35:39.826Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DOM">
+<meta name="twitter:description" content="DOM1级Node 类型节点关系简单来说，就是父与子的关系。
+每个节点都有一个 childNodes 属性，其中保存着一个 NodeList 对象。NodeList 是一个类数组对象，可通过方括号语法访问 NodeList 的值，NodeList 对象也有 length 属性。但它不是 Array 的实例。">
+<meta name="twitter:image" content="https://i.loli.net/2018/03/27/5aba17be64edc.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Lonely Ronin&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/luo.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>DOM | Lonely Ronin&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?fd5bab865a130ae51882a7fcef4a4a79";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/luo.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">L丶Ronin</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">脚踏实地，厚积薄发</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">留言板</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:https://mail.qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com" title="知乎"></a>
+                            
+                                <a class="fa 网易云音乐" href="http://music.163.com/" title="网易云音乐"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/H5/">H5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PanResponder手势响应/">PanResponder手势响应</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RN/">RN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Navigation/">React-Navigation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/教程/">教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/百度云/">百度云</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自用笔记/">自用笔记</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://hzmyj.github.io/">L丶Ronin</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">All In Or Nothing</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">L丶Ronin</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/luo.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">L丶Ronin</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">脚踏实地，厚积薄发</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">留言板</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:https://mail.qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com" title="知乎"></a>
+                            
+                                <a class="fa 网易云音乐" target="_blank" href="http://music.163.com/" title="网易云音乐"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-DOM" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/03/26/DOM/" class="article-date">
+      <time datetime="2018-03-26T13:29:49.000Z" itemprop="datePublished">2018-03-26</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      DOM
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自用笔记/">自用笔记</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="DOM1级"><a href="#DOM1级" class="headerlink" title="DOM1级"></a>DOM1级</h1><h2 id="Node-类型"><a href="#Node-类型" class="headerlink" title="Node 类型"></a>Node 类型</h2><h3 id="节点关系"><a href="#节点关系" class="headerlink" title="节点关系"></a>节点关系</h3><p>简单来说，就是父与子的关系。</p>
+<p>每个节点都有一个 <code>childNodes</code> 属性，其中保存着一个 <code>NodeList</code> 对象。<code>NodeList</code> 是一个<strong>类数组</strong>对象，可通过方括号语法访问 <code>NodeList</code> 的值，<code>NodeList</code> 对象也有 <code>length</code> 属性。<strong>但它不是 Array 的实例</strong>。</p>
+<a id="more"></a>
+<h3 id="访问节点"><a href="#访问节点" class="headerlink" title="访问节点"></a>访问节点</h3><p>一般来说，可以通过方括号，也可以使用 <code>item()</code> 方法；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div><div class="line" style="height:20px">3</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="keyword">var</span> firstChild = someNode.childNodes[<span class="number">0</span>];</div><div style="height:20px" class="line"><span class="keyword">var</span> secondChild = someNode.childNodes.item(<span class="number">1</span>);</div><div style="height:20px" class="line"><span class="keyword">var</span> count = someNode.childNodes.length;</div></pre></td></tr></table></figure>
+<h3 id="操作节点"><a href="#操作节点" class="headerlink" title="操作节点"></a>操作节点</h3><h4 id="appendchild"><a href="#appendchild" class="headerlink" title="appendchild()"></a>appendchild()</h4><p>插入节点，用于向 <code>childNodes</code> 列表的<strong>末尾</strong>添加一个节点，并返回新增的节点。</p>
+<p>如果想把节点放在 <code>childNodes</code> 列表中某个特定的位置上，可以使用 <code>insertBefore()</code> 方法，传入两个参数：要插入的节点和作为参照的节点。</p>
+<p><code>appendChild()</code> 和 <code>insertBefore()</code> 方法只插入节点，不会移除节点。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div><div class="line" style="height:20px">3</div><div class="line" style="height:20px">4</div><div class="line" style="height:20px">5</div><div class="line" style="height:20px">6</div><div class="line" style="height:20px">7</div><div class="line" style="height:20px">8</div><div class="line" style="height:20px">9</div><div class="line" style="height:20px">10</div><div class="line" style="height:20px">11</div><div class="line" style="height:20px">12</div><div class="line" style="height:20px">13</div><div class="line" style="height:20px">14</div><div class="line" style="height:20px">15</div><div class="line" style="height:20px">16</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="comment">&lt;!-- html 代码 --&gt;</span></div><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"list1"</span>&gt;</span></div><div style="height:20px" class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"item1"</span>&gt;</span>第一条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div style="height:20px" class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"item2"</span>&gt;</span>第二条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div style="height:20px" class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"item3"</span>&gt;</span>第三条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div style="height:20px" class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"item4"</span>&gt;</span>第四条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div style="height:20px" class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"item5"</span>&gt;</span>第五条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div style="height:20px" class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div style="height:20px" class="line"></div><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"list2"</span>&gt;</span></div><div style="height:20px" class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"item11"</span>&gt;</span>第1条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div style="height:20px" class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"item12"</span>&gt;</span>第2条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div style="height:20px" class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"item13"</span>&gt;</span>第3条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div style="height:20px" class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"item14"</span>&gt;</span>第4条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div style="height:20px" class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"item15"</span>&gt;</span>第5条<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div style="height:20px" class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div><div class="line" style="height:20px">3</div><div class="line" style="height:20px">4</div><div class="line" style="height:20px">5</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="comment">// js 代码</span></div><div style="height:20px" class="line"><span class="keyword">var</span> someNode = <span class="built_in">document</span>.getElementById(<span class="string">'list1'</span>);</div><div style="height:20px" class="line"><span class="keyword">var</span> node = <span class="built_in">document</span>.getElementById(<span class="string">'list2'</span>).childNodes[<span class="number">1</span>];</div><div style="height:20px" class="line">someNode.appendChild(node); <span class="comment">// 将 "第1条" 插入到 "第五条"  之后</span></div><div style="height:20px" class="line">someNode.insertBefore(node,someNode.childNodes[<span class="number">1</span>]); <span class="comment">// 将 "第一条" 插入到 "第一条" 之前</span></div></pre></td></tr></table></figure>
+<h4 id="replaceChild"><a href="#replaceChild" class="headerlink" title="replaceChild()"></a>replaceChild()</h4><p>接收两个参数：要插入的节点和要替换的节点。</p>
+<p>要替换的节点将由此方法返回，并从文档树中移除。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="comment">// 如果在上例中只执行下面js语句，则代表将 "第一条" 改为 "第1条" ， 同时原 "第1条" 被删除</span></div><div style="height:20px" class="line">someNode.replaceChild(node,someNode.childNodes[<span class="number">1</span>]);</div></pre></td></tr></table></figure>
+<p>如果只需要移除节点，可以通过 <code>removeChild()</code> 来实现，此方法接收一个参数：即要删除的节点。</p>
+<h2 id="Document-类型"><a href="#Document-类型" class="headerlink" title="Document 类型"></a>Document 类型</h2><p>在浏览器中，document 对象表示整个HTML页面。Document 节点有以下属性：</p>
+<ul>
+<li><code>nodeType</code> 的值为9</li>
+<li><code>nodeName</code> 的值为 “#document”</li>
+<li><code>nodeValue</code> 的值为 null</li>
+<li><code>parentNode</code> 的值为 null</li>
+<li><code>ownerDocument</code> 的值为 null</li>
+</ul>
+<h3 id="文档子节点"><a href="#文档子节点" class="headerlink" title="文档子节点"></a>文档子节点</h3><p>注意，<code>document.doctype</code> 在IE9+、Firefox、Chrome中，会作为文档的第一个子节点，即：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="built_in">document</span>.doctype == <span class="built_in">document</span>.childNodes[<span class="number">0</span>] == <span class="built_in">document</span>.firstChild</div></pre></td></tr></table></figure>
+<p>而在Safari、Opera中，虽然 <code>document.doctype</code> 是一个 DocumentType 节点，但不会出现在 <code>document.childNodes</code> 中。</p>
+<p>所以，由于浏览器对 <code>document.doctype</code> 的支持不一致，这个属性用处有限。</p>
+<h3 id="文档信息"><a href="#文档信息" class="headerlink" title="文档信息"></a>文档信息</h3><p>title 属性包含着 <code>&lt;title&gt;</code> 元素中的文本。，可通过以下方法获取或更改：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="keyword">var</span> title = <span class="built_in">document</span>.title; <span class="comment">// 获取标题</span></div><div style="height:20px" class="line"><span class="built_in">document</span>.title = <span class="string">"title"</span>; <span class="comment">// 设置标题</span></div></pre></td></tr></table></figure>
+<p>有三个属性与网页请求有关，分别是 <code>URL</code> 、<code>domain</code> 、<code>referrer</code> 。</p>
+<p><code>URL</code> 属性包含页面完整的URL，<code>domain</code> 只包含页面的域名，<code>referrer</code> 保存着连接到当前页面的那个页面的URL，没有来源页面的情况下，<code>referrer</code> 可能包含空字符串。</p>
+<h3 id="查找元素"><a href="#查找元素" class="headerlink" title="查找元素"></a>查找元素</h3><ul>
+<li><p><code>getElementById()</code></p>
+<p>与页面元素的 <code>id</code> 属性严格匹配，包括大小写。以下面元素为例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"myDiv"</span>&gt;</span>Some text<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div><div class="line" style="height:20px">3</div><div class="line" style="height:20px">4</div><div class="line" style="height:20px">5</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="comment">// 这一句可以取得对上面 &lt;div&gt; 元素的引用</span></div><div style="height:20px" class="line"><span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">'myDiv'</span>);</div><div style="height:20px" class="line"></div><div style="height:20px" class="line"><span class="comment">// 在除IE7及更早版本外，会返回 null</span></div><div style="height:20px" class="line"><span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">'mydiv'</span>);</div></pre></td></tr></table></figure>
+<p>​</p>
+<p>另：在IE7及较低版本中，<code>name</code> 特性与给定ID匹配的表单元素（ <code>&lt;input&gt;</code> 、<code>&lt;textarea&gt;</code> 、<code>&lt;button&gt;</code> 、<code>&lt;select&gt;</code> ）也会被改方法返回。例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"myElement"</span>&gt;</span></div><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"myElement"</span>&gt;</span>A div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>基于上面的 html 代码，在IE7中调用 <code>document.getElementById(&quot;myElement&quot;)</code> 会返回 <code>&lt;input&gt;</code> 元素。为了避免这个问题，最好<strong>不让表单的 <code>name</code> 特性与其他元素的 <code>id</code> 相同</strong>。</p>
+</li>
+<li><p><code>getElementsByTagName()</code> </p>
+<p>返回包含0个或多个元素的 <code>NodeList</code> 。在 HTML 文档中，该方法返回一个 HTMLCollection 对象，作为一个”动态”集合。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div><div class="line" style="height:20px">3</div><div class="line" style="height:20px">4</div><div class="line" style="height:20px">5</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="keyword">var</span> images = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"img"</span>);<span class="comment">// 获得所有&lt;img&gt;元素</span></div><div style="height:20px" class="line"></div><div style="height:20px" class="line"><span class="built_in">console</span>.log(images.length);<span class="comment">// length属性可以获取数量</span></div><div style="height:20px" class="line"><span class="built_in">console</span>.log(images[<span class="number">0</span>].src); <span class="comment">// 可通过方括号获得具体某个&lt;img&gt;元素</span></div><div style="height:20px" class="line"><span class="built_in">console</span>.log(images.item(<span class="number">0</span>).src);<span class="comment">// 也可通过 item() 方法获取</span></div></pre></td></tr></table></figure>
+<p>如果一个页面包含如下 <code>&lt;img&gt;</code> 元素：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"myimage.gif"</span> <span class="attr">name</span>=<span class="string">"myImage"</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>可通过如下方法获取这个 <code>&lt;img&gt;</code> 元素：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div><div class="line" style="height:20px">3</div><div class="line" style="height:20px">4</div><div class="line" style="height:20px">5</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="keyword">var</span> images = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"img"</span>);</div><div style="height:20px" class="line"></div><div style="height:20px" class="line"><span class="comment">// 以下两种方法均可，第二种会更便利</span></div><div style="height:20px" class="line"><span class="keyword">var</span> myImage = images.namedItem(<span class="string">"myImage"</span>);</div><div style="height:20px" class="line"><span class="keyword">var</span> myImage = images[<span class="string">"myImage"</span>];</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<p>一般来说，在 HTML 页面中，<code>getElementsByTagName()</code> <strong>可以不区分大小写</strong>。</p>
+<ul>
+<li><p><code>getElementsByName()</code></p>
+<p>同上，返回带有给定 <code>name</code> 特性的所有元素。</p>
+<p>常用来取得单选按钮；为了确保发送给浏览器的值正确无误，所有单选按钮<strong>必须具有相同的 <code>name</code> 特性</strong>。</p>
+</li>
+</ul>
+<h3 id="特殊集合"><a href="#特殊集合" class="headerlink" title="特殊集合"></a>特殊集合</h3><p><code>document</code> 对象有一些特殊集合，包括：</p>
+<ul>
+<li><code>document.anchors</code> ：包含所有带 <code>name</code> 特性的 <code>&lt;a&gt;</code> 元素</li>
+<li><code>document.forms</code> ：包含所有 <code>&lt;form&gt;</code> 元素，与 <code>document.getElementsByTagName(&quot;form&quot;)</code> 得到的结果相同</li>
+<li><code>document.images</code> ：包含所有 <code>&lt;img&gt;</code> 元素，与 <code>document.getElementsByTagName(&quot;img&quot;)</code> 得到的结果相同</li>
+<li><code>document.links</code> ：包含所有带 <code>href</code> 特性的 <code>&lt;a&gt;</code> 元素</li>
+</ul>
+<h2 id="Element-类型"><a href="#Element-类型" class="headerlink" title="Element 类型"></a>Element 类型</h2><ul>
+<li><code>nodeType</code> 的值为 1</li>
+<li><code>nodeName</code> 的值为元素标签名</li>
+</ul>
+<h3 id="取得-设置-删除特性"><a href="#取得-设置-删除特性" class="headerlink" title="取得 / 设置 / 删除特性"></a>取得 / 设置 / 删除特性</h3><p><code>getAttribute()</code> 、 <code>setAttribute()</code> 以及 <code>removeAttribute()</code></p>
+<ul>
+<li><p>特性名称不区分大小写，即 <code>id</code> 和 <code>ID</code> 代表同一特性。</p>
+</li>
+<li><p><strong>另外，根据 HTML5 规范，自定义特性应该加上 <code>data-</code> 前缀以便验证</strong>。</p>
+</li>
+<li><p>有两类特性，虽然有对象的属性名，但属性的值与通过 <code>getAttribute()</code> 返回的值不相同</p>
+<ul>
+<li><p>style：通过 <code>getAttribute()</code> 返回的值包含CSS文本，通过属性来访问会返回一个对象。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div><div class="line" style="height:20px">3</div><div class="line" style="height:20px">4</div><div class="line" style="height:20px">5</div><div class="line" style="height:20px">6</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"test"</span> <span class="attr">style</span>=<span class="string">"height:30px;width:30px;background-color:red;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div style="height:20px" class="line">  <span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">'test'</span>);</div><div style="height:20px" class="line">  <span class="built_in">console</span>.log(div.style); <span class="comment">// 对象</span></div><div style="height:20px" class="line">  <span class="built_in">console</span>.log(div.getAttribute(<span class="string">'style'</span>)) <span class="comment">// 字符串</span></div><div style="height:20px" class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>返回如下结果：</p>
+<p><img src="https://i.loli.net/2018/03/27/5aba17be64edc.png" alt="1.png"></p>
+</li>
+<li><p>onclick：通过 <code>getAttribute()</code> 返回相应代码字符串，访问 onclick 属性，返回一个 JavaScript函数。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div><div class="line" style="height:20px">3</div><div class="line" style="height:20px">4</div><div class="line" style="height:20px">5</div><div class="line" style="height:20px">6</div><div class="line" style="height:20px">7</div><div class="line" style="height:20px">8</div><div class="line" style="height:20px">9</div><div class="line" style="height:20px">10</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"test"</span> <span class="attr">onclick</span>=<span class="string">"goto()"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div style="height:20px" class="line">  <span class="function"><span class="keyword">function</span> <span class="title">goto</span>(<span class="params"></span>) </span>&#123;</div><div style="height:20px" class="line">    <span class="built_in">window</span>.location=<span class="string">"http://www.baidu.com"</span></div><div style="height:20px" class="line">  &#125;</div><div style="height:20px" class="line"></div><div style="height:20px" class="line">  <span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">'test'</span>);</div><div style="height:20px" class="line">  <span class="built_in">console</span>.log(div.onclick);</div><div style="height:20px" class="line">  <span class="built_in">console</span>.log(div.getAttribute(<span class="string">'onclick'</span>));</div><div style="height:20px" class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2018/03/27/5aba17e253c93.png" alt="2.png"></p>
+</li>
+</ul>
+</li>
+<li><p>如果为DOM元素添加一个自定义的属性，该属性不会增加到元素的特性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div></pre></td><td class="code"><pre><div style="height:20px" class="line">div.mycolor = <span class="string">"red"</span>;</div><div style="height:20px" class="line"><span class="built_in">console</span>.log(div.getAttribute(<span class="string">"mycolor"</span>)); <span class="comment">// null</span></div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>IE6 及之前版本不支持 <code>removeAttribute()</code></p>
+</li>
+</ul>
+<h3 id="创建元素"><a href="#创建元素" class="headerlink" title="创建元素"></a>创建元素</h3><p>使用 document.createElement() 可以创建新元素。这个方法只接收一个参数，即要创建元素的标签名（在 HTML 文档中不区分大小写）</p>
+<p>之后可通过 <code>appendChild()</code> 、<code>insertBefore()</code> 、<code>replaceChild()</code> 方法插入元素。</p>
+<h3 id="元素子节点"><a href="#元素子节点" class="headerlink" title="元素子节点"></a>元素子节点</h3><p>需要注意的是，<strong>除了IE外</strong>，其他浏览器对以下两种 HTML 代码的解析方式不同：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div><div class="line" style="height:20px">3</div><div class="line" style="height:20px">4</div><div class="line" style="height:20px">5</div><div class="line" style="height:20px">6</div><div class="line" style="height:20px">7</div><div class="line" style="height:20px">8</div><div class="line" style="height:20px">9</div><div class="line" style="height:20px">10</div><div class="line" style="height:20px">11</div><div class="line" style="height:20px">12</div><div class="line" style="height:20px">13</div><div class="line" style="height:20px">14</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"test1"</span>&gt;</span><span class="tag">&lt;<span class="name">li</span>&gt;</span>some text<span class="tag">&lt;/<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">li</span>&gt;</span>some text<span class="tag">&lt;/<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">li</span>&gt;</span>some text<span class="tag">&lt;/<span class="name">li</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div style="height:20px" class="line"></div><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"test2"</span>&gt;</span></div><div style="height:20px" class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>some text<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div style="height:20px" class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>some text<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div style="height:20px" class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>some text<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div style="height:20px" class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div style="height:20px" class="line"></div><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div style="height:20px" class="line">  <span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">'test1'</span>);</div><div style="height:20px" class="line">  <span class="built_in">console</span>.log(test1.childNodes)</div><div style="height:20px" class="line">  <span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">'test2'</span>);</div><div style="height:20px" class="line">  <span class="built_in">console</span>.log(test2.childNodes)</div><div style="height:20px" class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>结果如下</p>
+<p><img src="https://i.loli.net/2018/03/27/5aba1cb72bcee.png" alt="3.png"></p>
+<p>可见除了IE，浏览器对空白符（比如回车）会在 <code>childNodes</code> 中返回 #text（<code>nodeType</code> 为 3）类型。如果需要通过 <code>childNodes</code> 遍历子节点，在执行某项操作前，通常要检查以下 <code>nodeType</code> 属性，如下面例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div><div class="line" style="height:20px">3</div><div class="line" style="height:20px">4</div><div class="line" style="height:20px">5</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = element.childNodes.length; i &lt; len; i++ )&#123;</div><div style="height:20px" class="line">    <span class="keyword">if</span>(element.childNodes[i].nodeType == <span class="number">1</span>)&#123;<span class="comment">// 表示是元素类型</span></div><div style="height:20px" class="line">        <span class="comment">// 执行某些操作</span></div><div style="height:20px" class="line">    &#125;</div><div style="height:20px" class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/03/26/DOM/">DOM</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">L丶Ronin</a></p>
+        <p><span>发布时间:</span>2018-03-26, 21:29:49</p>
+        <p><span>最后更新:</span>2018-03-27, 18:35:39</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/03/26/DOM/" title="DOM">http://zhumengyue.github.io/2018/03/26/DOM/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://zhumengyue.github.io/2018/03/26/DOM/　　作者: L丶Ronin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/03/26/BOM/">
+                    BOM 相关
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DOM1级"><span class="toc-number">1.</span> <span class="toc-text">DOM1级</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Node-类型"><span class="toc-number">1.1.</span> <span class="toc-text">Node 类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#节点关系"><span class="toc-number">1.1.1.</span> <span class="toc-text">节点关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#访问节点"><span class="toc-number">1.1.2.</span> <span class="toc-text">访问节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作节点"><span class="toc-number">1.1.3.</span> <span class="toc-text">操作节点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#appendchild"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">appendchild()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#replaceChild"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">replaceChild()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Document-类型"><span class="toc-number">1.2.</span> <span class="toc-text">Document 类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文档子节点"><span class="toc-number">1.2.1.</span> <span class="toc-text">文档子节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文档信息"><span class="toc-number">1.2.2.</span> <span class="toc-text">文档信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查找元素"><span class="toc-number">1.2.3.</span> <span class="toc-text">查找元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊集合"><span class="toc-number">1.2.4.</span> <span class="toc-text">特殊集合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Element-类型"><span class="toc-number">1.3.</span> <span class="toc-text">Element 类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#取得-设置-删除特性"><span class="toc-number">1.3.1.</span> <span class="toc-text">取得 / 设置 / 删除特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建元素"><span class="toc-number">1.3.2.</span> <span class="toc-text">创建元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元素子节点"><span class="toc-number">1.3.3.</span> <span class="toc-text">元素子节点</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section id="comments">
+    <style> aside.comment-bar { margin: auto 30px; }</style>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function(){
+            this.page.url = 'http://zhumengyue.github.io/2018/03/26/DOM/';
+            this.page.identifier = '2018/03/26/DOM/';
+        };
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = '//zhumengyue.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+</section>
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/03/26/BOM/" title="下一篇: BOM 相关">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/DOM/">DOM</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/BOM/">BOM 相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/17/JavaScript高级程序设计二/">JavaScript之引用类型 （Array & Date）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/25/移动端H5多平台分享/">移动端H5多平台分享</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/JavaScript高级程序设计学习笔记一/">JavaScript之基本概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/25/可拖动交换的Item/">RN 可拖拽交换的Item</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/11/React-Navigation 使用方法/">React-Navigation 使用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/10/React-Native笔记/">React Native 笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/Python-爬虫/">Python-爬虫-获取教务处成绩</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/31/baiduyun-nolimit/">解决网页版百度云大文件下载限制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/29/hexo博客搭建/">Hexo 博客搭建</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 L丶Ronin
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂)" + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*)" + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?afe0c759e34ef5d91f3fe57d166d7de6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  </div>
+</body>
+</html>
