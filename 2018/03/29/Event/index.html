@@ -15,16 +15,22 @@
 
 
 
-<meta name="description" content="声明，主要为自用笔记，记录一些常见又略坑的东西，复杂的会另开篇幅单写。不定时更新">
+<meta name="description" content="事件冒泡
+IE的事件流叫做事件冒泡，即事件开始时由最具体的元素（嵌套层次最深的元素）接收，逐级向上传播。如：
+123456789&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;	&amp;lt;head&amp;gt;        &amp;lt;title&amp;gt;Event Bubbling Example&amp;lt;/title&amp;gt;    &amp;lt;/head&amp;gt;    &amp;lt;body&amp;gt">
 <meta property="og:type" content="article">
-<meta property="og:title" content="React Native 笔记">
-<meta property="og:url" content="http://zhumengyue.github.io/2017/07/10/React-Native笔记/index.html">
+<meta property="og:title" content="Event">
+<meta property="og:url" content="http://zhumengyue.github.io/2018/03/29/Event/index.html">
 <meta property="og:site_name" content="Lonely Ronin's Blog">
-<meta property="og:description" content="声明，主要为自用笔记，记录一些常见又略坑的东西，复杂的会另开篇幅单写。不定时更新">
-<meta property="og:updated_time" content="2017-08-02T12:22:00.000Z">
+<meta property="og:description" content="事件冒泡
+IE的事件流叫做事件冒泡，即事件开始时由最具体的元素（嵌套层次最深的元素）接收，逐级向上传播。如：
+123456789&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;	&amp;lt;head&amp;gt;        &amp;lt;title&amp;gt;Event Bubbling Example&amp;lt;/title&amp;gt;    &amp;lt;/head&amp;gt;    &amp;lt;body&amp;gt">
+<meta property="og:updated_time" content="2018-03-29T11:01:01.871Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="React Native 笔记">
-<meta name="twitter:description" content="声明，主要为自用笔记，记录一些常见又略坑的东西，复杂的会另开篇幅单写。不定时更新">
+<meta name="twitter:title" content="Event">
+<meta name="twitter:description" content="事件冒泡
+IE的事件流叫做事件冒泡，即事件开始时由最具体的元素（嵌套层次最深的元素）接收，逐级向上传播。如：
+123456789&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;	&amp;lt;head&amp;gt;        &amp;lt;title&amp;gt;Event Bubbling Example&amp;lt;/title&amp;gt;    &amp;lt;/head&amp;gt;    &amp;lt;body&amp;gt">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -56,7 +62,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>React Native 笔记 | Lonely Ronin&#39;s Blog</title>
+<title>Event | Lonely Ronin&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -282,11 +288,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-React-Native笔记" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Event" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/07/10/React-Native笔记/" class="article-date">
-      <time datetime="2017-07-10T10:37:23.000Z" itemprop="datePublished">2017-07-10</time>
+      <a href="/2018/03/29/Event/" class="article-date">
+      <time datetime="2018-03-29T10:38:50.000Z" itemprop="datePublished">2018-03-29</time>
 </a>
 
 
@@ -301,7 +307,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      React Native 笔记
+      Event
     </h1>
   
 
@@ -316,7 +322,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RN/">RN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自用笔记/">自用笔记</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自用笔记/">自用笔记</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -326,11 +332,19 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>　　<strong>声明，主要为自用笔记，记录一些常见又略坑的东西，复杂的会另开篇幅单写。不定时更新</strong></p>
-<a id="more"></a>
-<h4 id="文字垂直居中"><a href="#文字垂直居中" class="headerlink" title="文字垂直居中"></a>文字垂直居中</h4><p>在 <code>&lt;Text&gt;&lt;/Text&gt;</code> 标签外面套一层 <code>&lt;View&gt;</code> 标签，在 <code>&lt;View&gt;</code> 中设样式 <code>alignItems: &#39;center&#39;</code> 、 <code>justifyContent: &#39;center&#39;</code> 即可。</p>
-<h4 id="默认颜色"><a href="#默认颜色" class="headerlink" title="默认颜色"></a>默认颜色</h4><p>有时候真的需要知道 <code>react-native</code> 的那个默认背景色是什么，对，就是那个灰不拉几的颜色，可以直接用QQ的截图工具，鼠标移过去即可。</p>
-<p>颜色为 <code>RGB: (233,233,239)</code> 或 <code>RGB: #E9E9EF</code> </p>
+        <ul>
+<li><p>事件冒泡</p>
+<p>IE的事件流叫做<strong>事件冒泡</strong>，即事件开始时由<strong>最具体</strong>的元素（<strong>嵌套层次最深的元素</strong>）接收，逐级向上传播。如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line" style="height:20px">1</div><div class="line" style="height:20px">2</div><div class="line" style="height:20px">3</div><div class="line" style="height:20px">4</div><div class="line" style="height:20px">5</div><div class="line" style="height:20px">6</div><div class="line" style="height:20px">7</div><div class="line" style="height:20px">8</div><div class="line" style="height:20px">9</div></pre></td><td class="code"><pre><div style="height:20px" class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div style="height:20px" class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div style="height:20px" class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div style="height:20px" class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Event Bubbling Example<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div style="height:20px" class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div style="height:20px" class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div style="height:20px" class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"myDiv"</span>&gt;</span>Click  Me<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div style="height:20px" class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div style="height:20px" class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>如果单机了页面中的 <code>&lt;div&gt;</code> 元素，则此 <code>click</code> 事件的传播顺序为：</p>
+<p><code>&lt;div&gt;</code> —&gt; <code>&lt;body&gt;</code> —&gt;<code>&lt;html&gt;</code> —&gt; <code>document</code></p>
+<p>所有现代浏览器都支持事件冒泡。</p>
+</li>
+<li><p>事件捕获</p>
+<p>即顺序与冒泡完全相反： <code>document</code>—&gt;<code>&lt;html&gt;</code> —&gt; <code>&lt;body&gt;</code> —&gt;<code>&lt;div&gt;</code></p>
+</li>
+</ul>
+<p>事件流包括三个阶段：事件捕获阶段、处于目标阶段、事件冒泡阶段。</p>
 
       
     </div>
@@ -339,13 +353,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/07/10/React-Native笔记/">React Native 笔记</a></p>
+        <p><span>本文标题:</span><a href="/2018/03/29/Event/">Event</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">L丶Ronin</a></p>
-        <p><span>发布时间:</span>2017-07-10, 18:37:23</p>
-        <p><span>最后更新:</span>2017-08-02, 20:22:00</p>
+        <p><span>发布时间:</span>2018-03-29, 18:38:50</p>
+        <p><span>最后更新:</span>2018-03-29, 19:01:01</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/07/10/React-Native笔记/" title="React Native 笔记">http://zhumengyue.github.io/2017/07/10/React-Native笔记/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://zhumengyue.github.io/2017/07/10/React-Native笔记/　　作者: L丶Ronin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/03/29/Event/" title="Event">http://zhumengyue.github.io/2018/03/29/Event/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://zhumengyue.github.io/2018/03/29/Event/　　作者: L丶Ronin" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -357,16 +371,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/07/11/React-Navigation 使用方法/">
-                    React-Navigation 使用方法
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/02/01/Python-爬虫/">
-                    Python-爬虫-获取教务处成绩
+                <a href="/2018/03/26/DOM/">
+                    DOM
                 </a>
             </div>
         
@@ -378,7 +386,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#文字垂直居中"><span class="toc-number">1.</span> <span class="toc-text">文字垂直居中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#默认颜色"><span class="toc-number">2.</span> <span class="toc-text">默认颜色</span></a></li></ol>
+            
         
     </div>
     <style>
@@ -421,8 +429,8 @@
     <div id="disqus_thread"></div>
     <script>
         var disqus_config = function(){
-            this.page.url = 'http://zhumengyue.github.io/2017/07/10/React-Native笔记/';
-            this.page.identifier = '2017/07/10/React-Native笔记/';
+            this.page.url = 'http://zhumengyue.github.io/2018/03/29/Event/';
+            this.page.identifier = '2018/03/29/Event/';
         };
         var loadComment = function(){
             var d = document, s = d.createElement('script');
@@ -444,15 +452,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/07/11/React-Navigation 使用方法/" title="上一篇: React-Navigation 使用方法">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/02/01/Python-爬虫/" title="下一篇: Python-爬虫-获取教务处成绩">
+            <a href="/2018/03/26/DOM/" title="下一篇: DOM">
                 <i class="fa fa-angle-right"></i>
             </a>
         
